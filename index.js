@@ -1,4 +1,4 @@
-// das créditos puta
+// Da Crédito Puta
 
 //npm
 const qrcode = require("qrcode-terminal")
@@ -39,8 +39,8 @@ const time = moment().tz('Asia/Jakarta').format("HH:mm:ss")
 const _leveling = JSON.parse(fs.readFileSync('./database/leveling.json'))
 const _level = JSON.parse(fs.readFileSync('./database/level.json'))
 const afk = JSON.parse(fs.readFileSync('./database/off.json'))
+const ban = JSON.parse(fs.readFileSync('./database/banned.json'))
 const welkom = JSON.parse(fs.readFileSync('./database/welkom.json'))
-
 //Config
 const { covidindo } = require("./config/covidindo.js")
 const { covidworld } = require("./config/covidworld.js")
@@ -80,62 +80,139 @@ fake = 'ℱℯ𝓁𝒾𝓍𝒸𝓇𝒶𝒸𝓀 ℬℴ𝓉'
 numbernye = '0'
 waktu = '-'
 alasan = '-'
+promote = '*Hola Bienvenido🥳*'
+numbernye = '0'
+demote = '*Jajajajajajaa ya no eres admin🤣*'
+leave = '\`\`\`Pedazo De Aborto 🥺👍🏿 Nunca Te Quisimos👋\`\`\`'
 //=================================================//
 async function starts() {
-	const pato = new WAConnection()
-	pato.logger.level = 'warn'
-	console.log('>', '[',color('INFO','blue'),']','Menglogin kawan...')
-	pato.on('qr', () => {
-	console.log(color('[','white'), color('!','red'), color(']','white'), color(' Scan the qr code above'))
+	const fxbot = new WAConnection()
+	fxbot.logger.level = 'warn'
+	console.log(banner.string)
+	console.log(color('[ BOT]','aqua'), color("BOT BY FELIXCRACK 409", "yellow"))
+	console.log('>', '[',color('INFO','blue'),']','Suscribete A Felixcrack 409...')
+	fxbot.on('qr', () => {
+	console.log(color('[','white'), color('!','red'), color(']','white'), color(' Escanea El Código QR De Arriba'))
 	})
 
-	fs.existsSync('./session.json') && pato.loadAuthInfo('./session.json')
-	pato.on('connecting', () => {
-	console.log(color('> [ INGFO ]', 'white'), color('Connecting...'))
+	fs.existsSync('./session.json') && fxbot.loadAuthInfo('./session.json')
+	fxbot.on('connecting', () => {
+	console.log(color('> [ INFO ]', 'white'), color('Conectando...'))
 	})
-	pato.on('open', () => {
-	console.log(color('> [ INGFO ]', 'white'), color('Connected'))
+	fxbot.on('open', () => {
+	console.log(color('> [ INFO ]', 'white'), color('Ya me conecte 👌🏻'))
 	})
-		await pato.connect({timeoutMs: 30*1000})
-  fs.writeFileSync('./session.json', JSON.stringify(pato.base64EncodedAuthInfo(), null, '\t'))
+		await fxbot.connect({timeoutMs: 30*1000})
+  fs.writeFileSync('./session.json', JSON.stringify(fxbot.base64EncodedAuthInfo(), null, '\t'))
 //Banned Call
-pato.on('CB:action,,call', async json => {
+fxbot.on('CB:action,,call', async json => {
     const callerId = json[2][0][1].from;
     console.log("call dari "+ callerId)
-        pato.sendMessage(callerId, "Auto block system, don't call please", MessageType.text)
+        fxbot.sendMessage(callerId, "Auto block system, don't call please", MessageType.text)
         await sleep(4000)
-        await pato.blockUser(callerId, "add")
+        await fxbot.blockUser(callerId, "add")
 })
 //Welkom
-	pato.on('group-participants-update', async (anu) => {
+	fxbot.on('group-participants-update', async (anu) => {
 		if (!welkom.includes(anu.jid)) return
 		try {
-            num = anu.participants[0]
-            const mdata = await pato.groupMetadata(anu.jid)
-            try {
-                var pp_user = await pato.getProfilePicture(num)
-            } catch (e) {
-                var pp_user = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png?q=60'
-            }
-            if (anu.action == 'add') {
-                ini_user = pato.contacts[num]
-                ini_img = await getBuffer(`http://api.lolhuman.xyz/api/welcomeimage?apikey=${LolHuman}&img=${pp_user}&text=${ini_user.notify}`)
-                group_info = await pato.groupMetadata(anu.jid)
-                welkam = `Hola ${ini_user.notify}\n◪ Welcome in group:\n├─ ${mdata.subject}\n│\n├─ Intro dulu\n├─ ❏ Nama: \n├─ ❏ Umur: \n├─ ❏ Asal kota: \n├─ ❏ Kelas: \n├─ ❏ Jenis kelamin: \n└─ ❏ Nomor: ${num.replace('@s.whatsapp.net', '')}\nSemoga Betah yaa~~\n${ini_user.notify}`
-                pato.sendMessage(anu.jid, ini_img, MessageType.image, { caption: welkam })
-            }
-            if (anu.action == 'remove') {
-                ini_user = pato.contacts[num]
-                ini_img = await getBuffer(`http://api.lolhuman.xyz/api/welcomeimage?apikey=${LolHuman}&img=${pp_user}&text=${ini_user.notify}`)
-                out = `◪ Goodbye ${ini_user.notify}\n◪ Leave from group:\n${mdata.subject}\n│\n└─ ❏ Nomor: ${num.replace('@s.whatsapp.net', '')}\nGoodBye~~`
-                pato.sendMessage(anu.jid, ini_img, MessageType.image, { caption: out })
-            }
+			const mdata = await fxbot.groupMetadata(anu.jid)
+			console.log(anu)
+			if (anu.action == 'add') {
+				num = anu.participants[0]
+				try {
+					ppimg = await fxbot.getProfilePicture(`${anu.participants[0].split('@')[0]}@c.us`)
+				} catch {
+					ppimg = 'https://i0.wp.com/www.gambarunik.id/wp-content/uploads/2019/06/Top-Gambar-Foto-Profil-Kosong-Lucu-Tergokil-.jpg'
+				}
+				teks  = `┏━━━━━━━━━━━━━━━━━
+┃          「 *𝗛𝗢𝗟𝗔* 」
+┃@${num.split('@')[0]}👋
+┃BIENVENIDO AL GRUPO 
+┃*${mdata.subject}*
+┃Usa ${prefix}fxbot\n┃Para Poder Usar El Bot
+┗━━━━━━━━━━━━━━━━━
+┏━━━━━━━━━━━━━━━━━
+┃   「 *_BIENVENIDO_* 」
+┗━━━━━━━━━━━━━━━━━
+┏━━━━━━━━━━━━━━━━━
+┠⊷️ *Suscríbete*:
+┠⊷️*http://bit.ly/2ZUH2jP
+┠⊷️ *Grupo Oficial*:
+┠⊷️ *http://bit.ly/3hpkba4
+┠⊷️ *Escribe ${prefix}fxbot
+┃⊷️ *Para Poder Usar El Bot*
+┗━━━━━━━━━━━━━━━━━
+┏━━━━━━━━━━━━━━━━━
+┠⊷️「 *DESCRIPCIÓN* 」
+┗━━━━━━━━━━━━━━━━━
+┏━━━━━━━━━━━━━━━━━
+  ${mdata.desc}*
+┗━━━━━━━━━━━━━━━━━`
+				let buff = await getBuffer(ppimg)
+				fxbot.sendMessage(mdata.id, buff, MessageType.image, {caption: teks, contextInfo: {"mentionedJid": [num]}})
+			} else if (anu.action == 'remove') {
+				num = anu.participants[0]
+				try {
+					ppimg = await fxbot.getProfilePicture(`${num.split('@')[0]}@c.us`)
+				} catch {
+					ppimg = 'https://i0.wp.com/www.gambarunik.id/wp-content/uploads/2019/06/Top-Gambar-Foto-Profil-Kosong-Lucu-Tergokil-.jpg'
+				}
+				teks = `*Adiós : @${num.split('@')[0]}*
+${leave}	`
+				let buff = await getBuffer(ppimg)
+				fxbot.sendMessage(mdata.id, buff, MessageType.image, {caption: teks, contextInfo: {"mentionedJid": [num]}})
+			} else if (anu.action == 'promote') {
+			const mdata = await fxbot.groupMetadata(anu.jid)
+			num = anu.participants[0]
+			try {
+					ppimg = await fxbot.getProfilePicture(`${anu.participants[0].split('@')[0]}@c.us`)
+				} catch {
+					ppimg = 'https://i0.wp.com/www.gambarunik.id/wp-content/uploads/2019/06/Top-Gambar-Foto-Profil-Kosong-Lucu-Tergokil-.jpg'
+				}
+			let buff = await getBuffer(ppimg)
+			
+			teks = `𝙉𝙐𝙀𝙑𝙊 𝘼𝙆𝙈𝙄𝙉
+			
+\`\`\`Nombre :\`\`\` ${num.replace('@s.whatsapp.net', '')}
+
+\`\`\`Usuario :\`\`\` @${num.split('@')[0]}
+
+\`\`\`Date : NOW\`\`\` 
+
+\`\`\`Grupo :\`\`\` ${mdata.subject}
+
+${promote}`
+			fxbot.sendMessage(mdata.id, buff, MessageType.image, {caption : teks, contextInfo: {mentionedJid: [num]}, quoted: { "key": { "participant": `${numbernye}`, "remoteJid": `Kntl`, "fromMe": false, "id": "B391837A58338BA8186C47E51FFDFD4A" }, "message": { "documentMessage": { "jpegThumbnail": buff, "mimetype": "application/octet-stream", "title": `PROMOTE`, "fileLength": "36", "pageCount": 0, "fileName": `_Welcome_` }}, "messageTimestamp": "1614069378", "status": "PENDING"}})
+		} else if (anu.action == 'demote') {
+			num = anu.participants[0]
+			const mdata = await fxbot.groupMetadata(anu.jid)
+			num = anu.participants[0]
+			try {
+					ppimg = await fxbot.getProfilePicture(`${anu.participants[0].split('@')[0]}@c.us`)
+				} catch {
+					ppimg = 'https://i0.wp.com/www.gambarunik.id/wp-content/uploads/2019/06/Top-Gambar-Foto-Profil-Kosong-Lucu-Tergokil-.jpg'
+				}
+			let buff = await getBuffer(ppimg)
+			teks = `𝙎𝙀 𝙈𝘼𝙏𝙊 𝘼 𝙐𝙉 𝘼𝙆𝙈𝙄𝙉
+			
+\`\`\`Nombre :\`\`\` ${num.replace('@s.whatsapp.net', '')}
+
+\`\`\`Usuario :\`\`\` @${num.split('@')[0]}
+
+\`\`\`Dato : Reciente\`\`\`
+
+\`\`\`Grupo :\`\`\` ${mdata.subject}
+
+${demote}`
+			fxbot.sendMessage(mdata.id, teks, MessageType.text, {contextInfo: {mentionedJid: [num]}, quoted: { "key": { "participant": `${numbernye}`, "remoteJid": `Ktl`, "fromMe": false, "id": "B391837A58338BA8186C47E51FFDFD4A" }, "message": { "documentMessage": { "jpegThumbnail": buff, "mimetype": "application/octet-stream", "title": `DEMOTE`, "fileLength": "36", "pageCount": 0, "fileName": `_Welcome_` }}, "messageTimestamp": "1614069378", "status": "PENDING"}})
+		}
 		} catch (e) {
 			console.log('Error : %s', color(e, 'red'))
 		}
 })
 	// Chat Update
-pato.on('chat-update', async (mek) => {
+fxbot.on('chat-update', async (mek) => {
 	try {
         if (!mek.hasNewMessage) return
         mek = mek.messages.all()[0]
@@ -156,18 +233,19 @@ pato.on('chat-update', async (mek) => {
 		const args = body.trim().split(/ +/).slice(1)
 		const isCmd = body.startsWith(prefix)
 		const q = args.join(' ')
-		//const meNumber = pato.user.jid.split("@")[0]
-		const botNumber = pato.user.jid
-		const ownerNumber = ['687533389@s.whatsapp.net'] //pato owner
+		const meNumber = fxbot.user.jid.split("@")[0]
+		const botNumber = fxbot.user.jid
+		const ownerNumber = ['12603763944@s.whatsapp.net'] //felix owner
 //SETTING WeA
 		const isGroup = from.endsWith('@g.us')
 		const sender = isGroup ? mek.participant : mek.key.remoteJid
 		const senderme = mek.participant
 		const isOwner = ownerNumber.includes(sender)
 		const isMe = botNumber.includes(senderme)
+		const isBanned = ban.includes(sender)
 //
-		const totalchat = await pato.chats.all()
-		const groupMetadata = isGroup ? await pato.groupMetadata(from) : ''
+		const totalchat = await fxbot.chats.all()
+		const groupMetadata = isGroup ? await fxbot.groupMetadata(from) : ''
 		const groupName = isGroup ? groupMetadata.subject : ''
 		const groupId = isGroup ? groupMetadata.jid : ''
 		const groupMembers = isGroup ? groupMetadata.participants : ''
@@ -176,8 +254,9 @@ pato.on('chat-update', async (mek) => {
 		const groupAdmins = isGroup ? getGroupAdmins(groupMembers) : ''
 		const isBotGroupAdmins = groupAdmins.includes(botNumber) || false
 		const isGroupAdmins = groupAdmins.includes(sender) || false
-        const conts = mek.key.fromMe ? pato.user.jid : pato.contacts[sender] || { notify: jid.replace(/@.+/, '') }
-        const pushname = mek.key.fromMe ? pato.user.name : conts.notify || conts.vname || conts.name || '-'
+        const isWelkom = isGroup ? welkom.includes(from) : false			 
+        const conts = mek.key.fromMe ? fxbot.user.jid : fxbot.contacts[sender] || { notify: jid.replace(/@.+/, '') }
+        const pushname = mek.key.fromMe ? fxbot.user.name : conts.notify || conts.vname || conts.name || '-'
        
         //MESS
         
@@ -200,19 +279,19 @@ pato.on('chat-update', async (mek) => {
         }
 
         const reply = (teks) => {
-            pato.sendMessage(from, teks, text, {quoted:mek})
+            fxbot.sendMessage(from, teks, text, {quoted:mek})
         }
 
         const sendMess = (hehe, teks) => {
-            pato.sendMessage(hehe, teks, text, {sendEphemeral: true})
+            fxbot.sendMessage(hehe, teks, text, {sendEphemeral: true})
         }
 
         const mentions = (teks, memberr, id) => {
-            (id == null || id == undefined || id == false) ? pato.sendMessage(from, teks.trim(), extendedText, { contextInfo: { "mentionedJid": memberr } }) : pato.sendMessage(from, teks.trim(), extendedText, { quoted: mek, contextInfo: { "mentionedJid": memberr } })
+            (id == null || id == undefined || id == false) ? fxbot.sendMessage(from, teks.trim(), extendedText, { contextInfo: { "mentionedJid": memberr } }) : fxbot.sendMessage(from, teks.trim(), extendedText, { quoted: mek, contextInfo: { "mentionedJid": memberr } })
         }
         //FAKEH
 const fakekontak = (teks) => {
-pato.sendMessage(from, teks, MessageType.text, {
+fxbot.sendMessage(from, teks, MessageType.text, {
 quoted: {
 key: {
 fromMe: false,
@@ -233,10 +312,10 @@ message: {
 			
 
         const fakethumb = (teks, yes) => {
-            pato.sendMessage(from, teks, image, {thumbnail:fs.readFileSync('./stik/fake.jpeg'),quoted:mek,caption:yes})
+            fxbot.sendMessage(from, teks, image, {thumbnail:fs.readFileSync('./stik/fake.jpeg'),quoted:mek,caption:yes})
         }
         const fakestatus = (teks) => {
-            pato.sendMessage(from, teks, text, {
+            fxbot.sendMessage(from, teks, text, {
                 quoted: {
                     key: {
                         fromMe: false,
@@ -266,7 +345,7 @@ message: {
             })
         }
         const fakegroup = (teks) => {
-            pato.sendMessage(from, teks, text, {
+            fxbot.sendMessage(from, teks, text, {
                 quoted: {
                     key: {
                         fromMe: false,
@@ -293,7 +372,7 @@ message: {
             })
         }
  const faketoko = (teks) => {
- pato.sendMessage(from, teks, text, {
+ fxbot.sendMessage(from, teks, text, {
 quoted: {
  key: {
 fromMe: false,
@@ -335,7 +414,7 @@ const faketokoforwaded = (teks) => {
 		}
 	}
 }
-	pato.sendMessage(from, teks, text, {
+	fxbot.sendMessage(from, teks, text, {
 	  quoted: anu,
 	  contextInfo:{
 	    "forwardingScore": 999, "isForwarded": true
@@ -355,7 +434,7 @@ const faketokoforwaded = (teks) => {
                     let asw = './stik' + names + '.webp'
                     exec(`ffmpeg -i ${filess} -vcodec libwebp -filter:v fps=fps=20 -lossless 1 -loop 0 -preset default -an -vsync 0 -s 512:512 ${asw}`, (err) => {
                         let media = fs.readFileSync(asw)
-                        pato.sendMessage(to, media, MessageType.sticker,{quoted:mek})
+                        fxbot.sendMessage(to, media, MessageType.sticker,{quoted:mek})
                         fs.unlinkSync(filess)
                         fs.unlinkSync(asw)
                     });
@@ -385,7 +464,7 @@ const faketokoforwaded = (teks) => {
                     if(mime.split("/")[0] === "audio"){
                         mime = Mimetype.mp4Audio
                     }
-                    pato.sendMessage(to, media, type, { quoted: mek, mimetype: mime, caption: text,contextInfo: {"mentionedJid": mids}})
+                    fxbot.sendMessage(to, media, type, { quoted: mek, mimetype: mime, caption: text,contextInfo: {"mentionedJid": mids}})
                     
                     fs.unlinkSync(filename)
                 });
@@ -397,7 +476,7 @@ const faketokoforwaded = (teks) => {
             if (isAfk(mek.key.remoteJid)) return
             addafk(mek.key.remoteJid)
             heheh = ms(Date.now() - waktu) 
-            pato.sendMessage(mek.key.remoteJid,`@${owner} Sedang Offline!\n\n*Alasan :* ${alasan}\n*Sejak :* ${heheh.hours} Jam, ${heheh.minutes} Menit, ${heheh.seconds} Detik lalu\n\nSilahkan Hubungi Lagi Nanti`, MessageType.text,{contextInfo:{ mentionedJid: [`${owner}@s.whatsapp.net`],'stanzaId': "B826873620DD5947E683E3ABE663F263", 'participant': "0@s.whatsapp.net", 'remoteJid': 'status@broadcast', 'quotedMessage': {"imageMessage": {"caption": "*OFFLINE*", 'jpegThumbnail': fs.readFileSync('./stik/thumb.jpeg')}}}})
+            fxbot.sendMessage(mek.key.remoteJid,`@${owner} Actualmente el bot está fuera de linea!\n\n *Desde* ${alasan}\n *Hace :* ${heheh.hours} Horas, ${heheh.minutes} Minutos, ${heheh.seconds} Segundos lalu\n\nPor favor contacta de nuevo más tarde`, MessageType.text,{contextInfo:{ mentionedJid: [`${owner}@s.whatsapp.net`],'stanzaId': "B826873620DD5947E683E3ABE663F263", 'participant': "0@s.whatsapp.net", 'remoteJid': 'status@broadcast', 'quotedMessage': {"imageMessage": {"caption": "*OFFLINE*", 'jpegThumbnail': fs.readFileSync('./stik/thumb.jpeg')}}}})
             }
             }   
         if (mek.key.remoteJid.endsWith('@g.us') && offline) {
@@ -410,7 +489,7 @@ const faketokoforwaded = (teks) => {
         if (isAfk(mek.key.remoteJid)) return
         addafk(mek.key.remoteJid)
         heheh = ms(Date.now() - waktu)
-        pato.sendMessage(mek.key.remoteJid,`@${owner} Sedang Offline!\n\n *Alasan :* ${alasan}\n *Sejak :* ${heheh.hours} Jam, ${heheh.minutes} Menit, ${heheh.seconds} Detik lalu\n\nSilahkan Hubungi Lagi Nanti`, MessageType.text,{contextInfo:{ mentionedJid: [`${owner}@s.whatsapp.net`],'stanzaId': "B826873620DD5947E683E3ABE663F263", 'participant': "0@s.whatsapp.net", 'remoteJid': 'status@broadcast', 'quotedMessage': {"imageMessage": {"caption": "*OFFLINE*", 'jpegThumbnail': fs.readFileSync('./stik/thumb.jpeg')}}}})
+        fxbot.sendMessage(mek.key.remoteJid,`@${owner} Actualmente el bot está fuera de linea!\n\n *Desde* ${alasan}\n *Hace :* ${heheh.hours} Horas, ${heheh.minutes} Minutos, ${heheh.seconds} Segundos lalu\n\nPor favor contacta de nuevo más tarde`, MessageType.text,{contextInfo:{ mentionedJid: [`${owner}@s.whatsapp.net`],'stanzaId': "B826873620DD5947E683E3ABE663F263", 'participant': "0@s.whatsapp.net", 'remoteJid': 'status@broadcast', 'quotedMessage': {"imageMessage": {"caption": "*OFFLINE*", 'jpegThumbnail': fs.readFileSync('./stik/thumb.jpeg')}}}})
           }
         }
             }
@@ -523,11 +602,11 @@ const getLevelingXp = (sender) => {
 			} 
 			/*[-- function rank --]*/
 			const levelRole = getLevelingLevel(sender)
-   	     var role = 'Trainee'
+   	     var role = 'Esclavo'
    	     if (levelRole <= 3) {
-   	         role = 'senior trainee'
+   	         role = 'Esclavo'
    	     } else if (levelRole <= 5) {
-   	         role = 'private'
+   	         role = 'Private'
    	     } else if (levelRole <= 7) {
    	         role = 'corporal'
    	     } else if (levelRole <= 8) {
@@ -612,8 +691,10 @@ const levelup = (pushname, sender, getLevelingXp,  getLevel, getLevelingLevel, r
 		const isQuotedAudio = type === 'extendedTextMessage' && content.includes('audioMessage')
 		const isQuotedSticker = type === 'extendedTextMessage' && content.includes('stickerMessage')
 		const isQuotedDocument = type === 'extendedTextMessage' && content.includes('documentMessage')
-      	if (!isGroup && isCmd) console.log('\x1b[1;37m>', '[ \x1b[1;36mEXECC\x1b[1;37m ]', time, color(command), 'from', color(sender.split('@')[0]))
-     	if (isCmd && isGroup) console.log('\x1b[1;37m>', '[ \x1b[1;36mEXECC\x1b[1;37m ]', time, color(command), 'from', color(sender.split('@')[0]), 'in', color(groupName))
+		if (isCmd && isBanned) {
+        return console.log(color('[ USUÁRIO BANEADO ] Ignorando comando', 'blue'), color(moment.tz('America/Sao_Paulo').format('HH:mm:ss'), 'yellow'), color(`${command}`),'DE:', color(pushname))}
+    	if (!isGroup && isCmd) console.log('\x1b[1;37m>', '[ \x1b[1;36mEXECC\x1b[1;37m ]', time, color(command), 'De', color(sender.split('@')[0]))
+        if (isCmd && isGroup) console.log('\x1b[1;37m>', '[ \x1b[1;36mEXECC\x1b[1;37m ]', time, color(command), 'De', color(sender.split('@')[0]), 'En', color(groupName))
 //selfmode
 		if (!mek.key.fromMe && banChats === true) return
 //botna
@@ -633,7 +714,7 @@ switch (command) {
     }
     let timestampi = speed();
     let sepid = speed() - timestampi
-    var { device_manufacturer, device_model, mcc, mnc, os_version, os_build_number, wa_version  } = pato.user.phone
+    var { device_manufacturer, device_model, mcc, mnc, os_version, os_build_number, wa_version  } = fxbot.user.phone
     anu = process.uptime()
     runtem = `${kyun(anu)}`
 //
@@ -741,6 +822,35 @@ switch (command) {
             offline = false
             fakestatus('We Dejame Dormir-_-')
             break       
+            case prefix+ 'ban':
+if (!isGroup) return reply(mess.only.group)
+if (!mek.key.fromMe) return fakestatus('This command only for me')
+if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return 
+mentioned = mek.message.extendedTextMessage.contextInfo.mentionedJid
+pru = '.\n'
+for (let _ of mentioned) {
+pru += `@${_.split('@')[0]}\n`
+}
+ban.push(`${mentioned}`)
+fs.writeFileSync('./database/banned.json', JSON.stringify(ban))
+susp = `🚫@${mentioned[0].split('@')[0]} ha sido prohibido y ya no podrá usar comandos de bot🚫`
+mentions(`${susp}`, mentioned, true)   
+break
+
+case prefix+ 'unban':
+if (!isGroup) return reply(mess.only.group)
+if (!mek.key.fromMe) return fakestatus('This command only for me')
+if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return 
+mentioned = mek.message.extendedTextMessage.contextInfo.mentionedJid
+pru = '.\n'
+for (let _ of mentioned) {
+pru += `@${_.split('@')[0]}\n`
+}
+ban.splice(`${mentioned}`)
+fs.writeFileSync('./database/banned.json', JSON.stringify(ban))
+susp = `❎@${mentioned[0].split('@')[0]} se ha desbloqueado y puede volver a utilizar los comandos del bot❎`
+mentions(`${susp}`, mentioned, true)   
+break
     case prefix+ 'off':
             if (!mek.key.fromMe) return 
             offline = true
@@ -769,10 +879,10 @@ switch (command) {
           	fakestatus(`「 *PUBLIC-MODE* 」`)
           	break
 					case prefix+ 'peson':
-					  pato.toggleDisappearingMessages(from, WA_DEFAULT_EPHEMERAL)
+					  fxbot.toggleDisappearingMessages(from, WA_DEFAULT_EPHEMERAL)
 					  break
 					  case prefix+ 'pesoff':
-					    pato.toggleDisappearingMessages(from, 0)
+					    fxbot.toggleDisappearingMessages(from, 0)
 					    break
             case prefix+ 'spam':
                 if (!isMe) return reply('「 ❗ 」ESTE COMANDO SOLO PUEDE SER USADO POR MI')
@@ -781,18 +891,18 @@ switch (command) {
                 if (!argz) return reply(`Ejemplo ${prefix}spam teks|jumlah`)
                 if (isNaN(argz[1])) return reply(`harus berupa angka`)
                 for (let i = 0; i < argz[1]; i++){
-                pato.sendMessage(from, argz[0], MessageType.text, {sendEphemeral: true})
+                fxbot.sendMessage(from, argz[0], MessageType.text, {sendEphemeral: true})
                 }
 	        break
              case prefix+ 'mute':
                 if (!isMe) return reply('「 ❗ 」ESTE COMANDO SOLO PUEDE SER USADO POR MI')
-                pato.modifyChat(from, ChatModification.mute, 24*60*60*1000)
+                fxbot.modifyChat(from, ChatModification.mute, 24*60*60*1000)
                 reply('*Éxito Al Silenciar Este Chat*')
                 console.log('Éxito En El Chat Mudo = ' + from)
                 break
             case prefix+ 'unmute':
                 if (!isMe) return reply('「 ❗ 」ESTE COMANDO SOLO PUEDE SER USADO POR MI')
-                pato.modifyChat(from, ChatModification.unmute)
+                fxbot.modifyChat(from, ChatModification.unmute)
                 reply('*Exitoso Desilencia Este Chat*')
                 console.log('Éxito Dejar De Silenciar El Chat = ' + from)
                 break
@@ -800,7 +910,7 @@ switch (command) {
                 if (!isMe) return reply('「 ❗ 」ESTE COMANDO SOLO PUEDE SER USADO POR MI')
                 reply('*Éxito Eliminar Este Chat*')
                 console.log('Éxito Al Eliminar Chat = ' + from)
-                pato.modifyChat(from, ChatModification.delete)
+                fxbot.modifyChat(from, ChatModification.delete)
                 break
 	case prefix+ 'setreply':
 	case prefix+ 'setfake':
@@ -813,7 +923,7 @@ switch (command) {
 	  if (isMe) return('「 ❗ 」ESTE COMANDO SOLO PUEDE SER USADO POR MI')
         	if ((isMedia && !mek.message.videoMessage || isQuotedImage || isQuotedSticker) && args.length == 0) {
           	boij = isQuotedImage || isQuotedSticker ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek
-			delb = await pato.downloadMediaMessage(boij)
+			delb = await fxbot.downloadMediaMessage(boij)
 			fs.writeFileSync(`./stik/fake.jpeg`, delb)
 			fakestatus('ÉXITO')
         	} else {
@@ -829,7 +939,7 @@ switch (command) {
 		  if (isMe) return('「 ❗ 」ESTE COMANDO SOLO PUEDE SER USADO POR MI')
 	        if ((isMedia && !mek.message.videoMessage || isQuotedImage || isQuotedSticker) && args.length == 0) {
           	boij = isQuotedImage || isQuotedSticker ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek
-			delb = await pato.downloadMediaMessage(boij)
+			delb = await fxbot.downloadMediaMessage(boij)
 			fs.writeFileSync(`./stik/thumb.jpeg`, delb)
 			fakestatus('Éxito')
         	} else {
@@ -846,7 +956,7 @@ case prefix+ 'term':
 if (!isMe) return reply('Solo propietarios...')
 			if (!q) return fakegroup(mess.wrongFormat)
 			exec(q, (err, stdout) => {
-			if (err) return fakegroup(`pato@self:~$ ${err}`)
+			if (err) return fakegroup(`fxbot@self:~$ ${err}`)
 			if (stdout) {
 			fakegroup(stdout)
 			}
@@ -870,7 +980,7 @@ if (!isMe) return reply('Solo propietarios...')
                   cn += `\n\nTitle : ${result[i].judul}\nLink : ${result[i].link}\nImage: ${result[i].thumb}`
                 }
                 buff = await getBuffer(result[0].thumb)
-                pato.sendMessage(from, buff, MessageType.image, {caption: cn})
+                fxbot.sendMessage(from, buff, MessageType.image, {caption: cn})
                 break
     case prefix+ 'infogempa':
                 tres = await Gempa()
@@ -878,7 +988,7 @@ if (!isMe) return reply('Solo propietarios...')
                 console.log(Map)
                 captt = `Waktu : ${Waktu}\nLintang : ${Lintang}\nBujur : ${Bujur}\nWilayah : ${Wilayah}`
                 thumbbb = await getBuffer(Map)
-                pato.sendMessage(from, thumbbb, MessageType.image, {caption: `${captt}`})
+                fxbot.sendMessage(from, thumbbb, MessageType.image, {caption: `${captt}`})
                 break
 //tools
      case prefix+ 'get':
@@ -887,7 +997,7 @@ if (!isMe) return reply('Solo propietarios...')
 			qweryna = args.join(' ')
 			eses = await axios.get(`https://shot.screenshotapi.net/screenshot?token=D2TDY3F-G5YMM94-K9JEQT8-FYBDQBB&url=${qweryna}&full_page=true&fresh=true&output=json&file_type=png&wait_for_event=load`)
 			buffqw = await getBuffer(eses.data.screenshot)
-			pato.sendMessage(from, buffqw, image, {quoted: mek})
+			fxbot.sendMessage(from, buffqw, image, {quoted: mek})
 			.catch(err => {
 				return('Intentando De Nuevo, Ocurrió Un Error Hace Un Momento...')
 			})
@@ -896,7 +1006,7 @@ if (!isMe) return reply('Solo propietarios...')
 			if (args.length < 1) return reply('Domain/Ip nya mana bang??')
 			var qwery = args.join(' ')
 			var repip = await fetchJson(`https://sonar.omnisint.io/reverse/${qwery}`)
-			pato.sendMessage(from, `${repip}`, text)
+			fxbot.sendMessage(from, `${repip}`, text)
       .catch((error) => {
             reply('Invalid domain/ip'); 
             })
@@ -905,17 +1015,17 @@ if (!isMe) return reply('Solo propietarios...')
 case prefix+ 'avatar':
 			anu = await axios.get('https://nekos.life/api/v2/img/avatar')
 				avatars = await getBuffer(anu.data.url)
-				pato.sendMessage(from, avatars, image, {quoted: mek})
+				fxbot.sendMessage(from, avatars, image, {quoted: mek})
 			break
 		case prefix+ 'loli':
 		  anu = await axios.get('https://nekos.life/api/v2/img/neko')
 				loliz = await getBuffer(anu.data.url)
-				pato.sendMessage(from, loliz, image, {quoted: mek})
+				fxbot.sendMessage(from, loliz, image, {quoted: mek})
 			break
 		case prefix+ 'waifu':
 			waifud = await axios.get('https://nekos.life/api/v2/img/waifu')
 			nyed = await getBuffer(waifud.data.url)
-			pato.sendMessage(from, nyed, image, { caption: 'Gatau caption nya apa', quoted: mek })
+			fxbot.sendMessage(from, nyed, image, { caption: 'Gatau caption nya apa', quoted: mek })
 			.catch(err => {
 				return('Repitiendo hay un error...')
 			})
@@ -925,7 +1035,7 @@ case prefix+ 'avatar':
 			sasu = JSON.parse(JSON.stringify(husbud));
 			ke =  sasu[Math.floor(Math.random() * sasu.length)];
 			nye = await getBuffer(ke)
-			pato.sendMessage(from, nye, image, { caption: 'Gatau caption nya apa', quoted: mek })
+			fxbot.sendMessage(from, nye, image, { caption: 'Gatau caption nya apa', quoted: mek })
 			.catch(err => {
 				return('Intentando De Nuevo, Ocurrió Un Error Hace Un Momento...')
 			})
@@ -938,7 +1048,7 @@ case prefix+ 'image':
             gis(gimg, async (error, result) => {
             n = result
             images = n[Math.floor(Math.random() * n.length)].url
-            pato.sendMessage(from,{url:images},image,{quoted:mek})
+            fxbot.sendMessage(from,{url:images},image,{quoted:mek})
             });
             break
 case prefix+ 'pinterest':
@@ -947,7 +1057,7 @@ case prefix+ 'pinterest':
 			sasu = JSON.parse(JSON.stringify(anu));
 			ke =  sasu[Math.floor(Math.random() * sasu.length)];
 			nye = await getBuffer(ke)
-			pato.sendMessage(from, nye, image, { caption: 'Hmmm', quoted: mek })
+			fxbot.sendMessage(from, nye, image, { caption: 'Hmmm', quoted: mek })
 			.catch(err => {
 				return('Que estas buscando ?')
 			})
@@ -962,7 +1072,7 @@ case prefix+ 'pinterest':
             imageToBase64(pjr)
             .then((response) => {
             media =  Buffer.from(response, 'base64');
-            pato.sendMessage(from,media,image,{quoted:mek,caption:'ℱℯ𝓁𝒾𝓍𝒸𝓇𝒶𝒸𝓀 ℬℴ𝓉'})
+            fxbot.sendMessage(from,media,image,{quoted:mek,caption:'ℱℯ𝓁𝒾𝓍𝒸𝓇𝒶𝒸𝓀 ℬℴ𝓉'})
             }
             )
             .catch((error) => {
@@ -974,7 +1084,7 @@ case prefix+ 'pinterest':
 	case prefix+ 'wallpaperanime':
 			wanime = await axios.get('https://nekos.life/api/v2/img/wallpaper')
 			bufwanime = await getBuffer(wanime.data.url)
-			pato.sendMessage(from, bufwanime, image, { quoted: mek })
+			fxbot.sendMessage(from, bufwanime, image, { quoted: mek })
 			.catch(err => {
 			return('Anuncio con errores de nuevo intente..')
 			})
@@ -983,7 +1093,7 @@ case prefix+ 'pinterest':
 case prefix+ 'nsfwavatar':
 			anu = await axios.get('https://nekos.life/api/v2/img/nsfw_avatar')
 				nsavatar = await getBuffer(anu.data.url)
-				pato.sendMessage(from, nsavatar, image, {quoted: mek})
+				fxbot.sendMessage(from, nsavatar, image, {quoted: mek})
 			.catch(err => {
 			return('Anuncio con errores de nuevo intente..')
 			})	
@@ -996,7 +1106,7 @@ case prefix+ 'nekopoi':
 			  fs.unlinkSync(ranp)
 				if (err) return reply('error')
 				buffer = fs.readFileSync(rano)
-				pato.sendMessage(from, buffer, MessageType.sticker, {quoted: mek})
+				fxbot.sendMessage(from, buffer, MessageType.sticker, {quoted: mek})
 				fs.unlinkSync(rano)
 			})
 			break
@@ -1008,14 +1118,14 @@ case prefix+ 'pussy':
 			  fs.unlinkSync(ranp)
 				if (err) return reply('error')
 				buffer = fs.readFileSync(rano)
-				pato.sendMessage(from, buffer, MessageType.sticker, {quoted: mek})
+				fxbot.sendMessage(from, buffer, MessageType.sticker, {quoted: mek})
 				fs.unlinkSync(rano)
 			})
 			break
 case prefix+ 'pussyimage':
   pusiimg = await axios.get('https://nekos.life/api/v2/img/pussy_jpg')
 			bufpusy = await getBuffer(pusiimg.data.url)
-				pato.sendMessage(from, bufpusy, MessageType.image, {quoted: mek})
+				fxbot.sendMessage(from, bufpusy, MessageType.image, {quoted: mek})
 			.catch(err => {
 			return('Anuncio con errores de nuevo intente..')
 			})
@@ -1023,7 +1133,7 @@ case prefix+ 'pussyimage':
 case prefix+ 'oppai':
 			opai = await axios.get('https://nekos.life/api/v2/img/tits')
 			opaiz = await getBuffer(opai.data.url)
-			pato.sendMessage(from, opaiz, image, { quoted: mek })
+			fxbot.sendMessage(from, opaiz, image, { quoted: mek })
 			.catch(err => {
 			return('El anuncio que cometió el error vuelve a intentarlo..')
 			})
@@ -1036,10 +1146,27 @@ case prefix+ 'feetg':
 			  fs.unlinkSync(ranp)
 				if (err) return reply('error')
 				buffer = fs.readFileSync(rano)
-				pato.sendMessage(from, buffer, MessageType.sticker, {quoted: mek})
+				fxbot.sendMessage(from, buffer, MessageType.sticker, {quoted: mek})
 				fs.unlinkSync(rano)
 			})
 			break
+case prefix+ 'welcome':  
+					if (!isGroup) return reply(`GROUP ONLY`)
+					if (!isGroupAdmins) return reply(mess.only.admin)
+					if (args.length < 1) return reply('[❗] 1 Para activar/ 0 Para desactivar')
+					if (Number(args[0]) === 1) {
+					if (isWelkom) return reply('*Ya estaba activo 🙄* !!!')
+					welkom.push(from)
+					fs.writeFileSync('./database/welkom.json', JSON.stringify(welkom))
+					reply('[❗] SE ACTIVO LA FUNCIÓN DE: WELCOME')
+					} else if (Number(args[0]) === 0) {
+					welkom.splice(from, 1)
+				    fs.writeFileSync('./database/welkom.json', JSON.stringify(welkom))
+				    reply('[❗] SE DESACTIVO: WELCOME')
+					} else {
+					reply(`......`)
+					}
+					break  
 case prefix+ 'bj':
       ranp = getRandom('.gif')
       rano = getRandom('.webp')
@@ -1048,14 +1175,14 @@ case prefix+ 'bj':
 			  fs.unlinkSync(ranp)
 				if (err) return reply('error')
 				buffer = fs.readFileSync(rano)
-				pato.sendMessage(from, buffer, MessageType.sticker, {quoted: mek})
+				fxbot.sendMessage(from, buffer, MessageType.sticker, {quoted: mek})
 				fs.unlinkSync(rano)
 			})
 			break
 case prefix+ 'ero':
 			eroz = await axios.get('https://nekos.life/api/v2/img/ero')
 			bufero = await getBuffer(eroz.data.url)
-			pato.sendMessage(from, bufero, image, { quoted: mek })
+			fxbot.sendMessage(from, bufero, image, { quoted: mek })
 			.catch(err => {
 			return('El anuncio que cometió el error vuelve a intentarlo..')
 			})
@@ -1063,7 +1190,7 @@ case prefix+ 'ero':
 case prefix+ 'erokemo':
 			erokz = await axios.get('https://nekos.life/api/v2/img/erokemo')
 			erokzs = await getBuffer(erokz.data.url)
-			pato.sendMessage(from, erokzs, image, { quoted: mek })
+			fxbot.sendMessage(from, erokzs, image, { quoted: mek })
 			.catch(err => {
 			return('Anuncio con errores de nuevo intente..')
 			})
@@ -1071,7 +1198,7 @@ case prefix+ 'erokemo':
 case prefix+ 'eroyuri':
 			eroyuriz = await axios.get('https://nekos.life/api/v2/img/eroyuri')
 			buferoyu = await getBuffer(opai.data.url)
-			pato.sendMessage(from, buferoyu, image, { quoted: mek })
+			fxbot.sendMessage(from, buferoyu, image, { quoted: mek })
 			.catch(err => {
 			return('Anuncio con errores de nuevo intente..')
 			})
@@ -1084,7 +1211,7 @@ case prefix+ 'tickle':
 			  fs.unlinkSync(ranp)
 				if (err) return reply('error')
 				buffer = fs.readFileSync(rano)
-				pato.sendMessage(from, buffer, MessageType.sticker, {quoted: mek})
+				fxbot.sendMessage(from, buffer, MessageType.sticker, {quoted: mek})
 				fs.unlinkSync(rano)
 			})
 			break
@@ -1096,7 +1223,7 @@ case prefix+ 'feed':
 			  fs.unlinkSync(ranp)
 				if (err) return reply('error')
 				buffer = fs.readFileSync(rano)
-				pato.sendMessage(from, buffer, MessageType.sticker, {quoted: mek})
+				fxbot.sendMessage(from, buffer, MessageType.sticker, {quoted: mek})
 				fs.unlinkSync(rano)
 			})
 			break
@@ -1108,14 +1235,14 @@ case prefix+ 'kuni':
 			  fs.unlinkSync(ranp)
 				if (err) return reply('error')
 				buffer = fs.readFileSync(rano)
-				pato.sendMessage(from, buffer, MessageType.sticker, {quoted: mek})
+				fxbot.sendMessage(from, buffer, MessageType.sticker, {quoted: mek})
 				fs.unlinkSync(rano)
 			})
 			break
 case prefix+ 'femdom':
       anu = await axios.get('https://nekos.life/api/v2/img/femdom')
 			bupemdom = await getBuffer(anu.data.url)
-				pato.sendMessage(from, bupemdom, image, {quoted: mek})
+				fxbot.sendMessage(from, bupemdom, image, {quoted: mek})
 			.catch(err => {
 			return('Anuncio con errores de nuevo intente..')
 			})
@@ -1123,7 +1250,7 @@ case prefix+ 'femdom':
 case prefix+ 'futanari':
 			futan = await axios.get('https://nekos.life/api/v2/img/futanari')
 			futanz = await getBuffer(futan.data.url)
-			pato.sendMessage(from, futanz, image, { quoted: mek })
+			fxbot.sendMessage(from, futanz, image, { quoted: mek })
 			break
 case prefix+ 'les':
       ranp = getRandom('.gif')
@@ -1133,14 +1260,14 @@ case prefix+ 'les':
 			  fs.unlinkSync(ranp)
 				if (err) return reply('error')
 				buffer = fs.readFileSync(rano)
-				pato.sendMessage(from, buffer, MessageType.sticker, {quoted: mek})
+				fxbot.sendMessage(from, buffer, MessageType.sticker, {quoted: mek})
 				fs.unlinkSync(rano)
 			})
 			break
 case prefix+ 'trap':
 			trapx = await axios.get('https://nekos.life/api/v2/img/tits')
 			traps = await getBuffer(trapx.data.url)
-			pato.sendMessage(from, traps, image, { quoted: mek })
+			fxbot.sendMessage(from, traps, image, { quoted: mek })
 			.catch(err => {
 			return('Anuncio con errores de nuevo intente..')
 			})
@@ -1153,7 +1280,7 @@ case prefix+ 'pat':
 			  fs.unlinkSync(ranp)
 				if (err) return reply('error')
 				buffer = fs.readFileSync(rano)
-				pato.sendMessage(from, buffer, MessageType.sticker, {quoted: mek})
+				fxbot.sendMessage(from, buffer, MessageType.sticker, {quoted: mek})
 				fs.unlinkSync(rano)
 			})
 			break
@@ -1165,14 +1292,14 @@ case prefix+ 'boobs':
 			  fs.unlinkSync(ranp)
 				if (err) return reply('error')
 				buffer = fs.readFileSync(rano)
-				pato.sendMessage(from, buffer, MessageType.sticker, {quoted: mek})
+				fxbot.sendMessage(from, buffer, MessageType.sticker, {quoted: mek})
 				fs.unlinkSync(rano)
 			})
 			break
 case prefix+ 'blowjob':
 			blowz = await axios.get('https://nekos.life/api/v2/img/blowjob')
 			bufblowz = await getBuffer(blowz.data.url)
-			pato.sendMessage(from, bufblowz, image, {quoted: mek})
+			fxbot.sendMessage(from, bufblowz, image, {quoted: mek})
 			.catch(err => {
 			return('Anuncio con errores de nuevo intente..')
 			})
@@ -1180,7 +1307,7 @@ case prefix+ 'blowjob':
 	case prefix+ 'hentai':
 			hentaiz = await axios.get('https://nekos.life/api/v2/img/hentai')
 			bufhtz = await getBuffer(hentaiz.data.url)
-			pato.sendMessage(from, bufhtz, image, {quoted: mek})
+			fxbot.sendMessage(from, bufhtz, image, {quoted: mek})
 			.catch(err => {
 			return('Anuncio con errores de nuevo intente..')
 			})
@@ -1188,7 +1315,7 @@ case prefix+ 'blowjob':
 	case prefix+ 'hololewed':
 			hololew = await axios.get('https://nekos.life/api/v2/img/hololewd')
 			hololewx = await getBuffer(hololew.data.url)
-			pato.sendMessage(from, hololewx, image, { quoted: mek })
+			fxbot.sendMessage(from, hololewx, image, { quoted: mek })
 			.catch(err =>{
 			  return('Hazte Weón..')
 			})
@@ -1196,21 +1323,44 @@ case prefix+ 'blowjob':
 case prefix+ 'lewd':
 			lewdd = await axios.get('https://nekos.life/api/v2/img/lewd')
 			buflewd = await getBuffer(lewdd.data.url)
-			pato.sendMessage(from, buflewd, image, { quoted: mek })
+			fxbot.sendMessage(from, buflewd, image, { quoted: mek })
 			
 			break
 	case prefix+ 'lewdk':
 			lewdkk = await axios.get('https://nekos.life/api/v2/img/lewdk')
 			lewdkz = await getBuffer(lewdkz.data.url)
-			pato.sendMessage(from, lewdkz, image, { quoted: mek })
+			fxbot.sendMessage(from, lewdkz, image, { quoted: mek })
 			.catch(err =>{
 			  return('Hazte Weon😑🔪..')
 			})
 			break
+case prefix+ 'imgtag':
+					if (!isGroupAdmins) return reply(mess.only.admin)
+                    if ((isMedia && !mek.message.videoMessage || isQuotedImage) && args.length == 0) {
+                        const encmedia = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo: lol
+                        filePath = await fxbot.downloadAndSaveMediaMessage(encmedia, filename = getRandom())
+                        var value = args.join(" ")
+                        var group = await fxbot.groupMetadata(from)
+                        var member = group['participants']
+                        var mem = []
+                        member.map(async adm => {
+                            mem.push(adm.id.replace('c.us', 's.whatsapp.net'))
+                        })
+                        var options = {
+                            contextInfo: { mentionedJid: mem },
+                            quoted: mek
+                        }
+                        ini_buffer = fs.readFileSync(filePath)
+                        fxbot.sendMessage(from, ini_buffer, image, options)
+                        fs.unlinkSync(filePath)
+                    } else {
+                        reply(`Responde A Una Imagen!!`)
+                    }
+                    break
 case prefix+ 'lewdkemo':
 			lewdkm = await axios.get('https://nekos.life/api/v2/img/lewdkemo')
 			buflewd = await getBuffer(lewdkm.data.url)
-			pato.sendMessage(from, buflewd, image, { quoted: mek })
+			fxbot.sendMessage(from, buflewd, image, { quoted: mek })
 			.catch(err => {
 			return('Anuncio con errores de nuevo intente..')
 			})
@@ -1223,7 +1373,7 @@ case prefix+ 'goose':
 			  fs.unlinkSync(ranp)
 				if (err) return reply('error')
 				buffer = fs.readFileSync(rano)
-				pato.sendMessage(from, buffer, MessageType.sticker, {quoted: mek})
+				fxbot.sendMessage(from, buffer, MessageType.sticker, {quoted: mek})
 				fs.unlinkSync(rano)
 			})
 			break
@@ -1235,14 +1385,14 @@ case prefix+ 'solog':
 			  fs.unlinkSync(ranp)
 				if (err) return reply('error')
 				buffer = fs.readFileSync(rano)
-				pato.sendMessage(from, buffer, MessageType.sticker, {quoted: mek})
+				fxbot.sendMessage(from, buffer, MessageType.sticker, {quoted: mek})
 				fs.unlinkSync(rano)
 			})
 			break
 case prefix+ 'yuri':
 			yuriz = await axios.get('https://nekos.life/api/v2/img/tits')
 			bupyuri = await getBuffer(yuriz.data.url)
-			pato.sendMessage(from, bupyuri, image, { quoted: mek })
+			fxbot.sendMessage(from, bupyuri, image, { quoted: mek })
 			.catch(err => {
 			return('Anuncio con errores de nuevo intente..')
 			})
@@ -1255,7 +1405,7 @@ case prefix+ 'yuri':
 			  fs.unlinkSync(ranp)
 				if (err) return reply('error')
 				buffer = fs.readFileSync(rano)
-				pato.sendMessage(from, buffer, MessageType.sticker, {quoted: mek})
+				fxbot.sendMessage(from, buffer, MessageType.sticker, {quoted: mek})
 				fs.unlinkSync(rano)
 			})
 			break		
@@ -1267,14 +1417,14 @@ case prefix+ 'pwankg':
 			  fs.unlinkSync(ranp)
 				if (err) return reply('error')
 				buffer = fs.readFileSync(rano)
-				pato.sendMessage(from, buffer, MessageType.sticker, {quoted: mek})
+				fxbot.sendMessage(from, buffer, MessageType.sticker, {quoted: mek})
 				fs.unlinkSync(rano)
 			})
 			break
 case prefix+ 'eron':
 			eronz = await axios.get('https://nekos.life/api/v2/img/eron')
 			buferon = await getBuffer(eronz.data.url)
-			pato.sendMessage(from, buferon, image, { quoted: mek })
+			fxbot.sendMessage(from, buferon, image, { quoted: mek })
 			.catch(err => {
 			return('Anuncio con errores de nuevo intente..')
 			})
@@ -1287,14 +1437,14 @@ case prefix+ 'kiss':
 			  fs.unlinkSync(ranp)
 				if (err) return reply('error')
 				buffer = fs.readFileSync(rano)
-				pato.sendMessage(from, buffer, MessageType.sticker, {quoted: mek})
+				fxbot.sendMessage(from, buffer, MessageType.sticker, {quoted: mek})
 				fs.unlinkSync(rano)
 			})
 			break
 case prefix+ 'keta':
 			ketaz = await axios.get('https://nekos.life/api/v2/img/keta')
 			bufketa = await getBuffer(ketaz.data.url)
-			pato.sendMessage(from, bufketa, image, { quoted: mek })
+			fxbot.sendMessage(from, bufketa, image, { quoted: mek })
 			.catch(err => {
 			return('Anuncio con errores de nuevo intente..')
 			})
@@ -1307,14 +1457,14 @@ case prefix+ 'cum':
 			  fs.unlinkSync(ranp)
 				if (err) return reply('error')
 				buffer = fs.readFileSync(rano)
-				pato.sendMessage(from, buffer, MessageType.sticker, {quoted: mek})
+				fxbot.sendMessage(from, buffer, MessageType.sticker, {quoted: mek})
 				fs.unlinkSync(rano)
 			})
 			break
 case prefix+ 'cumimage':
 			cumjpg = await axios.get('https://nekos.life/api/v2/img/cum_jpg')
 			bupjpg = await getBuffer(cumjpg.data.url)
-			pato.sendMessage(from, bupjpg, image, { quoted: mek })
+			fxbot.sendMessage(from, bupjpg, image, { quoted: mek })
 			.catch(err => {
 			return('Anuncio con errores de nuevo intente..')
 			})
@@ -1322,7 +1472,7 @@ case prefix+ 'cumimage':
 case prefix+ 'oppai':
 			opai = await axios.get('https://nekos.life/api/v2/img/tits')
 			opaiz = await getBuffer(opai.data.url)
-			pato.sendMessage(from, opaiz, image, { quoted: mek })
+			fxbot.sendMessage(from, opaiz, image, { quoted: mek })
 			.catch(err => {
 			return('Anuncio con errores de nuevo intente..')
 			})
@@ -1330,7 +1480,7 @@ case prefix+ 'oppai':
 case prefix+ 'holoero':
 		holox = await axios.get('https://nekos.life/api/v2/img/holoero')
 			bufholox = await getBuffer(holox.data.url)
-			pato.sendMessage(from, bufholox, image, { quoted: mek })
+			fxbot.sendMessage(from, bufholox, image, { quoted: mek })
 			.catch(err => {
 			return('Anuncio con errores de nuevo intente..')
 			})
@@ -1342,7 +1492,7 @@ case prefix+ 'holoero':
     case prefix+ 's':
             if ((isMedia && !mek.message.videoMessage || isQuotedImage) && args.length == 0) {
             const encmedia = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
-            const media = await pato.downloadAndSaveMediaMessage(encmedia)
+            const media = await fxbot.downloadAndSaveMediaMessage(encmedia)
                 ran = '666.webp'
                 await ffmpeg(`./${media}`)
                 .input(media)
@@ -1356,7 +1506,7 @@ case prefix+ 'holoero':
                 })
                 .on('end', function () {
                 console.log('Finish')
-                pato.sendMessage(from, fs.readFileSync(ran), MessageType.sticker, {quoted: mek})
+                fxbot.sendMessage(from, fs.readFileSync(ran), MessageType.sticker, {quoted: mek})
                  fs.unlinkSync(media)
                 fs.unlinkSync(ran)
                 })
@@ -1365,7 +1515,7 @@ case prefix+ 'holoero':
                 .save(ran)
                 } else if ((isMedia && mek.message.videoMessage.seconds < 11 || isQuotedVideo && mek.message.extendedTextMessage.contextInfo.quotedMessage.videoMessage.seconds < 11) && args.length == 0) {
                 const encmedia = isQuotedVideo ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
-                const media = await pato.downloadAndSaveMediaMessage(encmedia)
+                const media = await fxbot.downloadAndSaveMediaMessage(encmedia)
             ran = '999.webp'
             reply(mess.wait)
             await ffmpeg(`./${media}`)
@@ -1381,7 +1531,7 @@ case prefix+ 'holoero':
             })
             .on('end', function () {
             console.log('Finish')
-            pato.sendMessage(from, fs.readFileSync(ran), MessageType.sticker, {quoted: mek})
+            fxbot.sendMessage(from, fs.readFileSync(ran), MessageType.sticker, {quoted: mek})
             fs.unlinkSync(media)
             fs.unlinkSync(ran)
                 })
@@ -1400,20 +1550,20 @@ case prefix+ 'holoero':
             var b = pe.split("|")[1];
             if (isMedia && !mek.message.videoMessage || isQuotedImage ) {
             const encmedia = isQuotedImage   ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek
-             media = await pato.downloadAndSaveMediaMessage(encmedia)
+             media = await fxbot.downloadAndSaveMediaMessage(encmedia)
             await createExif(a,b)
             out = getRandom('.webp')
             ffmpeg(media)
             .on('error', (e) => {
             console.log(e)
-            pato.sendMessage(from, 'Terjadi kesalahan', 'conversation', { quoted: mek })
+            fxbot.sendMessage(from, 'Terjadi kesalahan', 'conversation', { quoted: mek })
             fs.unlinkSync(media)
             })
             .on('end', () => {
             _out = getRandom('.webp')
             spawn('webpmux', ['-set','exif','./stik/data.exif', out, '-o', _out])
             .on('exit', () => {
-            pato.sendMessage(from, fs.readFileSync(_out),'stickerMessage', { quoted: mek })
+            fxbot.sendMessage(from, fs.readFileSync(_out),'stickerMessage', { quoted: mek })
             fs.unlinkSync(out)
             fs.unlinkSync(_out)
             fs.unlinkSync(media)
@@ -1424,7 +1574,7 @@ case prefix+ 'holoero':
             .save(out) 
             } else if ((isMedia && mek.message.videoMessage.seconds < 11 || isQuotedVideo && mek.message.extendedTextMessage.contextInfo.quotedMessage.videoMessage.seconds < 11) && args.length == 0) {
             const encmedia = isQuotedVideo ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek
-            const media = await pato.downloadAndSaveMediaMessage(encmedia)
+            const media = await fxbot.downloadAndSaveMediaMessage(encmedia)
             pe = args.join('')
             var a = pe.split("|")[0];
             var b = pe.split("|")[1];
@@ -1433,14 +1583,14 @@ case prefix+ 'holoero':
             ffmpeg(media)
             .on('error', (e) => {
             console.log(e)
-            pato.sendMessage(from, 'Terjadi kesalahan', 'conversation', { quoted: mek })
+            fxbot.sendMessage(from, 'Terjadi kesalahan', 'conversation', { quoted: mek })
             fs.unlinkSync(media)
             })
             .on('end', () => {
             _out = getRandom('.webp')
             spawn('webpmux', ['-set','exif','./stik/data.exif', out, '-o', _out])
             .on('exit', () => {
-            pato.sendMessage(from, fs.readFileSync(_out),'stickerMessage', { quoted: mek })
+            fxbot.sendMessage(from, fs.readFileSync(_out),'stickerMessage', { quoted: mek })
             fs.unlinkSync(out)
             fs.unlinkSync(_out)
             fs.unlinkSync(media)
@@ -1457,12 +1607,12 @@ case prefix+ 'holoero':
     case prefix+ 'colong':
     		if (!isQuotedSticker) return reply('Stiker aja om')
             encmedia = JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo
-		    media = await pato.downloadAndSaveMediaMessage(encmedia)
+		    media = await fxbot.downloadAndSaveMediaMessage(encmedia)
             anu = args.join(' ').split('|')
             satu = anu[0] !== '' ? anu[0] : `SELF`
             dua = typeof anu[1] !== 'undefined' ? anu[1] : `BOT`
             require('./lib/fetcher.js').createExif(satu, dua)
-			require('./lib/fetcher.js').modStick(media, pato, mek, from)
+			require('./lib/fetcher.js').modStick(media, fxbot, mek, from)
 			break
     case prefix+ 'fdeface':
             ge = args.join('')           
@@ -1473,7 +1623,7 @@ case prefix+ 'holoero':
             const fde = `kirim/reply image dengan capion ${prefix}fdeface link|title|desc|teks`
             if (args.length < 1) return reply (fde)
             const dipes = isQuotedSticker || isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek
-            const tipes = await pato.downloadAndSaveMediaMessage(dipes)        
+            const tipes = await fxbot.downloadAndSaveMediaMessage(dipes)        
             const bufer = fs.readFileSync(tipes)
             const desc = `${pn}`
             const title = `${pen}`
@@ -1482,12 +1632,12 @@ case prefix+ 'holoero':
     		var anu = {
         	detectLinks: false
     		}
-    		var mat = await pato.generateLinkPreview(url)
+    		var mat = await fxbot.generateLinkPreview(url)
     		mat.title = title;
     		mat.description = desc;
     		mat.jpegThumbnail = bufer;
    			mat.canonicalUrl = buu; 
-    		pato.sendMessage(from, mat, MessageType.extendedText, anu)
+    		fxbot.sendMessage(from, mat, MessageType.extendedText, anu)
             break
 case prefix+ 'emoji':
 			if (!q) return fakegroup('Y El Puto Emoji Pedazo De Gil?')
@@ -1504,7 +1654,7 @@ case prefix+ 'emoji':
 case prefix+ 'attp':
 						if (args.length < 1) return reply(`Text Nya Mana Ajg?\n> *Contoh* : *${prefix}attp* _Aku Ganz_`)
 						attp2 = await getBuffer(`https://api.xteam.xyz/attp?file&text=${body.slice(6)}`)
-						pato.sendMessage(from, attp2, MessageType.sticker, {quoted: mek})
+						fxbot.sendMessage(from, attp2, MessageType.sticker, {quoted: mek})
 						break
 //MAKERIMAGE
 //COMINGSOON
@@ -1513,7 +1663,7 @@ case prefix+ 'attp':
 			if (!isQuotedSticker) return reply('Responde A Un 𝘀𝘁𝗶𝗰𝗸𝗲𝗿 !')
 			reply(mess.wait)
 			encmedia = JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo
-			media = await pato.downloadAndSaveMediaMessage(encmedia)
+			media = await fxbot.downloadAndSaveMediaMessage(encmedia)
 			ran = getRandom('.png')
 			exec(`ffmpeg -i ${media} ${ran}`, (err) => {
 			fs.unlinkSync(media)
@@ -1527,7 +1677,7 @@ case prefix+ 'attp':
     case prefix+ 'tovideo':
             if ((isMedia && !mek.message.videoMessage || isQuotedSticker) && args.length == 0) {
             ger = isQuotedSticker ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
-            owgi = await pato.downloadAndSaveMediaMessage(ger)
+            owgi = await fxbot.downloadAndSaveMediaMessage(ger)
             webp2mp4File(owgi).then(res=>{
             sendMediaURL(from,res.result,'Done')
             })
@@ -1540,13 +1690,13 @@ case prefix+ 'attp':
             if (!isQuotedVideo) return fakegroup('Responder a un video!')
             fakegroup(mess.wait)
             encmedia = JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo
-            media = await pato.downloadAndSaveMediaMessage(encmedia)
+            media = await fxbot.downloadAndSaveMediaMessage(encmedia)
             ran = getRandom('.mp4')
             exec(`ffmpeg -i ${media} ${ran}`, (err) => {
             fs.unlinkSync(media)
             if (err) return fakegroup(`Err: ${err}`)
             buffer453 = fs.readFileSync(ran)
-            pato.sendMessage(from, buffer453, audio, { mimetype: 'audio/mp4', quoted: mek })
+            fxbot.sendMessage(from, buffer453, audio, { mimetype: 'audio/mp4', quoted: mek })
             fs.unlinkSync(ran)
             })
             break
@@ -1554,13 +1704,13 @@ case prefix+ 'attp':
             if (!isQuotedVideo) return fakegroup('Responde A Un Vídeo, Y No Te Hagas Pndj!')
             fakegroup(mess.wait)
             encmedia = JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo
-            media = await pato.downloadAndSaveMediaMessage(encmedia)
+            media = await fxbot.downloadAndSaveMediaMessage(encmedia)
             ran = getRandom('.mp4')
             exec(`ffmpeg -i ${media} -filter_complex "[0:v]setpts=0.5*PTS[v];[0:a]atempo=2[a]" -map "[v]" -map "[a]" ${ran}`, (err) => {
             fs.unlinkSync(media)
             if (err) return fakegroup(`Err: ${err}`)
             buffer453 = fs.readFileSync(ran)
-            pato.sendMessage(from, buffer453, video, { mimetype: 'video/mp4', quoted: mek })
+            fxbot.sendMessage(from, buffer453, video, { mimetype: 'video/mp4', quoted: mek })
             fs.unlinkSync(ran)
             })
             break
@@ -1568,33 +1718,33 @@ case prefix+ 'attp':
             if (!isQuotedVideo) return fakegroup('Responder A Un Video!')
             fakegroup(mess.wait)
             encmedia = JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo
-            media = await pato.downloadAndSaveMediaMessage(encmedia)
+            media = await fxbot.downloadAndSaveMediaMessage(encmedia)
             ran = getRandom('.mp4')
             exec(`ffmpeg -i ${media} -filter_complex "[0:v]setpts=2*PTS[v];[0:a]atempo=0.5[a]" -map "[v]" -map "[a]" ${ran}`, (err) => {
             fs.unlinkSync(media)
             if (err) return fakegroup(`Err: ${err}`)
             buffer453 = fs.readFileSync(ran)
-            pato.sendMessage(from, buffer453, video, { mimetype: 'video/mp4', quoted: mek })
+            fxbot.sendMessage(from, buffer453, video, { mimetype: 'video/mp4', quoted: mek })
             fs.unlinkSync(ran)
             })
             break
     case prefix+ 'reverse':
             if (!isQuotedVideo) return fakegroup('Responde A Un Vídeo, Y No Te Hagas Pndj!')
             encmedia = JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo
-            media = await pato.downloadAndSaveMediaMessage(encmedia)
+            media = await fxbot.downloadAndSaveMediaMessage(encmedia)
             ran = getRandom('.mp4')
             exec(`ffmpeg -i ${media} -vf reverse -af areverse ${ran}`, (err) => {
             fs.unlinkSync(media)
             if (err) return fakegroup(`Err: ${err}`)
             buffer453 = fs.readFileSync(ran)
-            pato.sendMessage(from, buffer453, video, { mimetype: 'video/mp4', quoted: mek })
+            fxbot.sendMessage(from, buffer453, video, { mimetype: 'video/mp4', quoted: mek })
             fs.unlinkSync(ran)
             })
             break
     case prefix+ 'tourl':
             if ((isMedia && !mek.message.videoMessage || isQuotedImage || isQuotedVideo ) && args.length == 0) {
             boij = isQuotedImage || isQuotedVideo ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek
-            owgi = await pato.downloadMediaMessage(boij)
+            owgi = await fxbot.downloadMediaMessage(boij)
             res = await upload(owgi)
             reply(res)
             } else {
@@ -1604,16 +1754,16 @@ case prefix+ 'attp':
 //Upload Story WeA
     case prefix+ 'upswteks':
             if (!q) return fakestatus('Isi teksnya!')
-            pato.sendMessage('status@broadcast', `${q}`, extendedText)
+            fxbot.sendMessage('status@broadcast', `${q}`, extendedText)
             fakegroup(`Sukses Up story wea teks ${q}`)
             break
     case prefix+ 'upswimage':
             if (isQuotedImage) {
             const swsw = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
-            cihcih = await pato.downloadMediaMessage(swsw)
-            pato.sendMessage('status@broadcast', cihcih, image, { caption: `${q}` })
+            cihcih = await fxbot.downloadMediaMessage(swsw)
+            fxbot.sendMessage('status@broadcast', cihcih, image, { caption: `${q}` })
             bur = `Sukses Upload Story Image dengan Caption: ${q}`
-            pato.sendMessage(from, bur, text, { quoted: mek })
+            fxbot.sendMessage(from, bur, text, { quoted: mek })
             } else {
             fakestatus('Reply gambarnya!')
             }
@@ -1621,10 +1771,10 @@ case prefix+ 'attp':
     case prefix+ 'upswvideo':
             if (isQuotedVideo) {
             const swsw = isQuotedVideo ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
-            cihcih = await pato.downloadMediaMessage(swsw)
-            pato.sendMessage('status@broadcast', cihcih, video, { caption: `${q}` }) 
+            cihcih = await fxbot.downloadMediaMessage(swsw)
+            fxbot.sendMessage('status@broadcast', cihcih, video, { caption: `${q}` }) 
             bur = `Sukses Upload Story Video dengan Caption: ${q}`
-            pato.sendMessage(from, bur, text, { quoted: mek })
+            fxbot.sendMessage(from, bur, text, { quoted: mek })
             } else {
             fakestatus('Responde A Un Vídeo, Y No Te Hagas Pndj!')
             }
@@ -1636,7 +1786,7 @@ case prefix+ 'attp':
             var replace = gh.split("|")[0];
             var target = gh.split("|")[1];
             var bot = gh.split("|")[2];
-            pato.sendMessage(from, `${bot}`, text, {quoted: { key: { fromMe: false, participant: `${mentioned}`, ...(from ? { remoteJid: from } : {}) }, message: { conversation: `${target}` }}})
+            fxbot.sendMessage(from, `${bot}`, text, {quoted: { key: { fromMe: false, participant: `${mentioned}`, ...(from ? { remoteJid: from } : {}) }, message: { conversation: `${target}` }}})
             break
 //MOBIL LEJEN
 case prefix+ 'herolist':
@@ -1772,7 +1922,7 @@ break
 			try {
         	var aramas = await yts(srch);
    			} catch {
-        	return await pato.sendMessage(from, 'Error!', MessageType.text, dload)
+        	return await fxbot.sendMessage(from, 'Error!', MessageType.text, dload)
     		}
     		aramat = aramas.all 
     		var tbuff = await getBuffer(aramat[0].image)
@@ -1797,10 +1947,10 @@ break
             for (let ink of result.url_list)	{
             if (ink.includes('.mp4')){
             const igvdl = await getBuffer(ink)	
-	    pato.sendMessage(from,igvdl,video,{mimetype:'video/mp4',quoted:mek,caption:'ℱℯ𝓁𝒾𝓍𝒸𝓇𝒶𝒸𝓀 ℬℴ𝓉'})
+	    fxbot.sendMessage(from,igvdl,video,{mimetype:'video/mp4',quoted:mek,caption:'ℱℯ𝓁𝒾𝓍𝒸𝓇𝒶𝒸𝓀 ℬℴ𝓉'})
             } else if (ink.includes('.jpg')){
             const igpdl = await getBuffer(ink)
-            pato.sendMessage(from,igpdl,image,{mimetype:'image/jpeg',quoted:mek,caption:'ℱℯ𝓁𝒾𝓍𝒸𝓇𝒶𝒸𝓀 ℬℴ𝓉'})
+            fxbot.sendMessage(from,igpdl,image,{mimetype:'image/jpeg',quoted:mek,caption:'ℱℯ𝓁𝒾𝓍𝒸𝓇𝒶𝒸𝓀 ℬℴ𝓉'})
 	    }
             }
 	    })
@@ -1835,7 +1985,7 @@ break
     		axios.get(`https://tinyurl.com/api-create.php?url=${videonowm2}`)
     		.then(async (a) => {
     		me = `*Título* : ${text}\n*Link* : ${a.data}`
-		pato.sendMessage(from,{url:`${videonowm}`},video,{mimetype:'video/mp4',quoted:mek,caption:me})
+		fxbot.sendMessage(from,{url:`${videonowm}`},video,{mimetype:'video/mp4',quoted:mek,caption:me})
 		})
 		})
      		.catch(e => console.log(e))
@@ -1847,7 +1997,7 @@ break
  		tik.ssstik(`${args[0]}`)
     		.then(result => {
     		const { music,text } = result
-		pato.sendMessage(from,{url:`${music}`},audio,{mimetype:'audio/mp4',filename : `${text}`,quoted:mek})
+		fxbot.sendMessage(from,{url:`${music}`},audio,{mimetype:'audio/mp4',filename : `${text}`,quoted:mek})
 		})
      		.catch(e => console.log(e))
      		break
@@ -1876,7 +2026,7 @@ case prefix+ 'brainly':
 			for (let Y of res.data) {
 			teks += `\n*「 _BRAINLY_ 」*\n\n*➸ Pregunta:* ${Y.pertanyaan}\n\n*➸ Respuesta:* ${Y.jawaban[0].text}\n❉──────────────────❉\n`
 			}
-			pato.sendMessage(from, teks, text,{quoted:mek,detectLinks: false})                        
+			fxbot.sendMessage(from, teks, text,{quoted:mek,detectLinks: false})                        
             })              
 			break
 case prefix+ 'google':
@@ -1885,7 +2035,7 @@ case prefix+ 'google':
 			afanya = args.join(' ')
 			gogel = await axios.get(`https://shot.screenshotapi.net/screenshot?token=D2TDY3F-G5YMM94-K9JEQT8-FYBDQBB&url=https://www.google.com/search?q=${afanya}&safe=strict&sxsrf=ALeKk03WtBNqunvK303Qm3aEToejzpQvag%3A1621384426733&source=hp&ei=6lykYJbUKtPmz7sP-MugmAU&oq=p&gs_lcp=ChFtb2JpbGUtZ3dzLXdpei1ocBADMgQIIxAnMgQIIxAnMgQIIxAnMggIABCxAxCDATIFCAAQsQMyBQguELEDMggIABCxAxCDATIICAAQsQMQgwE6BwgjEOoCECdQlg9Ylg9g9hJoAXAAeACAAVmIAVmSAQExmAEAoAEBsAEP&sclient=mobile-gws-wiz-hp&full_page=true&fresh=true&output=json&file_type=png&wait_for_event=load`)
 			bupnyah = await getBuffer(gogel.data.screenshot)
-			pato.sendMessage(from, bupnyah, image, {quoted: mek, sendEphemeral: true})
+			fxbot.sendMessage(from, bupnyah, image, {quoted: mek, sendEphemeral: true})
 			.catch(err => {
 				return('Intentando De Nuevo, Ocurrió Un Error Hace Un Momento...')
 			})
@@ -1899,7 +2049,7 @@ if (args.length < 1) return reply('A Quien Quieres Agregar?')
 if (args[0].startsWith('08')) return reply('Usa El Código De Pais 😑🔪')
 try {
 num = `${args[0].replace(/ /g, '')}@s.whatsapp.net`
-pato.groupAdd(from, [num])
+fxbot.groupAdd(from, [num])
 } catch (e) {
 console.log('Error :', e)
 reply('No se pudo agregar el objetivo, tal vez porque en privado')
@@ -1917,10 +2067,10 @@ for (let _ of mentioned) {
 teks += `@${_.split('@')[0]}\n`
 }
 mentions(teks, mentioned, true)
-pato.groupRemove(from, mentioned)
+fxbot.groupRemove(from, mentioned)
 					} else {
 mentions(`byee.. @${mentioned[0].split('@')[0]}`, mentioned, true)
-pato.groupRemove(from, mentioned)
+fxbot.groupRemove(from, mentioned)
 }
 break
 case prefix+ 'promote':
@@ -1935,10 +2085,10 @@ for (let _ of mentioned) {
 teks += `@${_.split('@')[0]}\n`
 }
 mentions(from, mentioned, true)
-pato.groupRemove(from, mentioned)
+fxbot.groupRemove(from, mentioned)
 } else {
 mentions(`Ok @${mentioned[0].split('@')[0]} ahora eres administrador!`, mentioned, true)
-pato.groupMakeAdmin(from, mentioned)
+fxbot.groupMakeAdmin(from, mentioned)
 }
 break
 case prefix+ 'demote':
@@ -1953,10 +2103,10 @@ for (let _ of mentioned) {
 teks += `@${_.split('@')[0]}\n`
 }
 mentions(teks, mentioned, true)
-pato.groupRemove(from, mentioned)
+fxbot.groupRemove(from, mentioned)
 } else {
 mentions(`Oke @${mentioned[0].split('@')[0]} Ya no eres admin😂!`, mentioned, true)
-pato.groupDemoteAdmin(from, mentioned)
+fxbot.groupDemoteAdmin(from, mentioned)
 }
 break//DONE
     case prefix+ 'fitnahpc':
@@ -1965,8 +2115,8 @@ break//DONE
             var split = args.join(' ').replace(/@|\d/gi, '').split('|')
             var taged = mek.message.extendedTextMessage.contextInfo.mentionedJid[0]
             var options = {contextInfo: {quotedMessage: {extendedTextMessage: {text: split[0]}}}}
-            const responye = await pato.sendMessage(jids, `${split[1]}`, MessageType.text, options)
-            await pato.deleteMessage(jids, { id: responye.messageID, remoteJid: jids, fromMe: true })
+            const responye = await fxbot.sendMessage(jids, `${split[1]}`, MessageType.text, options)
+            await fxbot.deleteMessage(jids, { id: responye.messageID, remoteJid: jids, fromMe: true })
             break
     case prefix+ 'contac':
             pe = args.join(' ') 
@@ -1978,13 +2128,13 @@ break//DONE
             + `FN:${nah}\n`
             + `TEL;type=CELL;type=VOICE;waid=${entah}:${phoneNum('+' + entah).getNumber('internasional')}\n`
             + 'END:VCARD'.trim()
-            pato.sendMessage(from, {displayName: `${nah}`, vcard: vcard}, contact)
+            fxbot.sendMessage(from, {displayName: `${nah}`, vcard: vcard}, contact)
             break
  	case prefix+ 'hidetag':
 			if (!mek.key.fromMe) return fakestatus('SELF-BOT')
 			if (!isGroup) return reply(mess.only.group)
 			var value = args.join(' ')
-			var group = await pato.groupMetadata(from)
+			var group = await fxbot.groupMetadata(from)
 			var member = group['participants']
 			var mem = []
 			member.map(async adm => {
@@ -1995,14 +2145,14 @@ break//DONE
 			contextInfo: { mentionedJid: mem },
 			quoted: mek
 			}
-			pato.sendMessage(from, optionshidetag, text)
+			fxbot.sendMessage(from, optionshidetag, text)
 			break
     case prefix+ 'sticktag':
             if ((isMedia && !mek.message.videoMessage || isQuotedSticker) && args.length == 0) {
             encmedia = isQuotedSticker ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
-            file = await pato.downloadAndSaveMediaMessage(encmedia, filename = getRandom())
+            file = await fxbot.downloadAndSaveMediaMessage(encmedia, filename = getRandom())
             value = args.join(" ")
-            var group = await pato.groupMetadata(from)
+            var group = await fxbot.groupMetadata(from)
             var member = group['participants']
             var mem = []
             member.map(async adm => {
@@ -2013,7 +2163,7 @@ break//DONE
                 quoted: mek
             }
             ini_buffer = fs.readFileSync(file)
-            pato.sendMessage(from, ini_buffer, MessageType.sticker, options)
+            fxbot.sendMessage(from, ini_buffer, MessageType.sticker, options)
             fs.unlinkSync(file)
             } else {
             reply(`*Etiqueta de respuesta que se ha enviado*`)
@@ -2023,31 +2173,31 @@ break//DONE
 		      //by Dehanjing
                 if (!isQuotedVideo) return reply(`Responder Gif con subtítulo ${prefix + command}`)
                 quoted = JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo
-                download = await pato.downloadMediaMessage(quoted)
+                download = await fxbot.downloadMediaMessage(quoted)
                 await fs.writeFileSync(`giftag.gif`, download)
-                var group = await pato.groupMetadata(from)
+                var group = await fxbot.groupMetadata(from)
                 var member = group['participants']
                 var mem = []
                 member.map(async adm => {
                 mem.push(adm.id.replace('c.us', 's.whatsapp.net'))
                 })
                 thumb = fs.readFileSync(`giftag.gif`)
-                pato.sendMessage(from, thumb, video, { contextInfo: {mentionedJid: mem }, quoted: mek, mimetype: 'video/gif', thumbnail: thumb })
+                fxbot.sendMessage(from, thumb, video, { contextInfo: {mentionedJid: mem }, quoted: mek, mimetype: 'video/gif', thumbnail: thumb })
 			    await fs.unlinkSync(`giftag.gif`)
 			    break
 			case prefix+ 'doctag':
 			  //by Dehanjing
 		        if (!isQuotedDocument) return amek.reply(from, `Reply Document dengan caption *${prefix + command}*`, mek)
                 quoted = JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo
-                download = await pato.downloadMediaMessage(quoted)
+                download = await fxbot.downloadMediaMessage(quoted)
                 await fs.writeFileSync(`doc.txt`, download)
-                var group = await pato.groupMetadata(from)
+                var group = await fxbot.groupMetadata(from)
                 var member = group['participants']
                 var mem = []
                 member.map(async adm => {
                 mem.push(adm.id.replace('c.us', 's.whatsapp.net'))
                 })
-                pato.sendMessage(from, fs.readFileSync(`doc.txt`), document, { contextInfo: {mentionedJid: mem }, quoted: mek, mimetype: 'text/plain' })
+                fxbot.sendMessage(from, fs.readFileSync(`doc.txt`), document, { contextInfo: {mentionedJid: mem }, quoted: mek, mimetype: 'text/plain' })
 			    await fs.unlinkSync(`doc.txt`)
 			    break
     case prefix+ 'kontag':
@@ -2065,14 +2215,14 @@ break//DONE
             + `FN:${nah}\n`
             + `TEL;type=CELL;type=VOICE;waid=${entah}:${phoneNum('+' + entah).getNumber('internasional')}\n`
             + 'END:VCARD'.trim()
-            pato.sendMessage(from, {displayName: `${nah}`, vcard: vcard}, contact, {contextInfo: {"mentionedJid": members_ids}})
+            fxbot.sendMessage(from, {displayName: `${nah}`, vcard: vcard}, contact, {contextInfo: {"mentionedJid": members_ids}})
             break
     case prefix+ 'totag':
             if ((isMedia && !mek.message.videoMessage || isQuotedSticker) && args.length == 0) {
             encmedia = isQuotedSticker ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
-            file = await pato.downloadAndSaveMediaMessage(encmedia, filename = getRandom())
+            file = await fxbot.downloadAndSaveMediaMessage(encmedia, filename = getRandom())
             value = args.join(" ")
-            var group = await pato.groupMetadata(from)
+            var group = await fxbot.groupMetadata(from)
             var member = group['participants']
             var mem = []
             member.map(async adm => {
@@ -2083,13 +2233,13 @@ break//DONE
                 quoted: mek
             }
             ini_buffer = fs.readFileSync(file)
-            pato.sendMessage(from, ini_buffer, MessageType.sticker, options)
+            fxbot.sendMessage(from, ini_buffer, MessageType.sticker, options)
             fs.unlinkSync(file)
             } else if ((isMedia && !mek.message.videoMessage || isQuotedImage) && args.length == 0) {
             encmedia = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
-            file = await pato.downloadAndSaveMediaMessage(encmedia, filename = getRandom())
+            file = await fxbot.downloadAndSaveMediaMessage(encmedia, filename = getRandom())
             value = args.join(" ")
-            var group = await pato.groupMetadata(from)
+            var group = await fxbot.groupMetadata(from)
             var member = group['participants']
             var mem = []
             member.map(async adm => {
@@ -2100,13 +2250,13 @@ break//DONE
                 quoted: mek
             }
             ini_buffer = fs.readFileSync(file)
-            pato.sendMessage(from, ini_buffer, image, options)
+            fxbot.sendMessage(from, ini_buffer, image, options)
             fs.unlinkSync(file)
         } else if ((isMedia && !mek.message.videoMessage || isQuotedAudio) && args.length == 0) {
             encmedia = isQuotedAudio ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
-            file = await pato.downloadAndSaveMediaMessage(encmedia, filename = getRandom())
+            file = await fxbot.downloadAndSaveMediaMessage(encmedia, filename = getRandom())
             value = args.join(" ")
-            var group = await pato.groupMetadata(from)
+            var group = await fxbot.groupMetadata(from)
             var member = group['participants']
             var mem = []
             member.map(async adm => {
@@ -2119,13 +2269,13 @@ break//DONE
                 quoted: mek
             }
             ini_buffer = fs.readFileSync(file)
-            pato.sendMessage(from, ini_buffer, audio, options)
+            fxbot.sendMessage(from, ini_buffer, audio, options)
             fs.unlinkSync(file)
         }  else if ((isMedia && !mek.message.videoMessage || isQuotedVideo) && args.length == 0) {
             encmedia = isQuotedVideo ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
-            file = await pato.downloadAndSaveMediaMessage(encmedia, filename = getRandom())
+            file = await fxbot.downloadAndSaveMediaMessage(encmedia, filename = getRandom())
             value = args.join(" ")
-            var group = await pato.groupMetadata(from)
+            var group = await fxbot.groupMetadata(from)
             var member = group['participants']
             var mem = []
             member.map(async adm => {
@@ -2137,7 +2287,7 @@ break//DONE
                 quoted: mek
             }
             ini_buffer = fs.readFileSync(file)
-            pato.sendMessage(from, ini_buffer, video, options)
+            fxbot.sendMessage(from, ini_buffer, video, options)
             fs.unlinkSync(file)
         } else{
           reply(`reply gambar/sticker/audio/video dengan caption ${prefix}totag`)
@@ -2151,7 +2301,7 @@ break//DONE
             if (!q) return fakestatus('Ingrese el enlace del grupo')
             var codeInvite = hen.split('https://chat.whatsapp.com/')[1]
             if (!codeInvite) return fakegroup ('asegúrese de que el enlace sea correcto!')
-            var response = await pato.acceptInvite(codeInvite)
+            var response = await fxbot.acceptInvite(codeInvite)
             fakestatus('ÉXITO')
             } catch {
             fakegroup('LINK ERROR!')
@@ -2182,12 +2332,12 @@ case prefix+ 'bc':
 					if (args.length < 1) return reply('.......')
 					const more = String.fromCharCode(8206)
                     const readmore = more.repeat(4001)
-					anu = await pato.chats.all()
+					anu = await fxbot.chats.all()
 					if (isMedia && !mek.message.videoMessage || isQuotedImage) {
 						const encmedia = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek
-						bc = await pato.downloadMediaMessage(encmedia)
+						bc = await fxbot.downloadMediaMessage(encmedia)
 						for (let _ of anu) {
-							pato.sendMessage(_.jid, bc, image, {caption: `${body.slice(4)}\n> Permiso de transmisión`, sendEphemeral: true})
+							fxbot.sendMessage(_.jid, bc, image, {caption: `${body.slice(4)}\n> Permiso de transmisión`, sendEphemeral: true})
 						}
 						reply('_Anuncio Dado Con Exito_')
 					} else {
@@ -2209,8 +2359,8 @@ case prefix+ 'bc':
 				break 
 				case prefix+ 'narutod':
 				oi = body.slice(8)
-				oii = await getBuffer(`https://patoapi.herokuapp.com/api/photooxy/naruto?text=${oi}`)
-				pato.sendMessage(from, oii, image, {quoted: mek, caption: 'Ok brother'})
+				oii = await getBuffer(`https://fxbotapi.herokuapp.com/api/photooxy/naruto?text=${oi}`)
+				fxbot.sendMessage(from, oii, image, {quoted: mek, caption: 'Ok brother'})
 				break
 				
 //END BANG RAKIT SENDIRI YAA DAN JGN LUPA KASIH NAMA SAYA YG SUDAH MENGBANGUN INI SC :(
