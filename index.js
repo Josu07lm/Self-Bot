@@ -41,6 +41,9 @@ const _level = JSON.parse(fs.readFileSync('./database/level.json'))
 const afk = JSON.parse(fs.readFileSync('./database/off.json'))
 const ban = JSON.parse(fs.readFileSync('./database/banned.json'))
 const welkom = JSON.parse(fs.readFileSync('./database/welkom.json'))
+const antilink = JSON.parse(fs.readFileSync('./database/antilink.json'))
+const nsfw = JSON.parse(fs.readFileSync('./database/nsfw.json'))
+const setting = JSON.parse(fs.readFileSync('./database/setting.json'))
 //Config
 const { covidindo } = require("./config/covidindo.js")
 const { covidworld } = require("./config/covidworld.js")
@@ -78,6 +81,8 @@ targetpc = '12603763944'
 owner = '12603763944'
 fake = 'ℱℯ𝓁𝒾𝓍𝒸𝓇𝒶𝒸𝓀 ℬℴ𝓉'
 numbernye = '0'
+tz = setting.tz 
+fx = setting.fx
 waktu = '-'
 alasan = '-'
 promote = '*Hola Bienvenido🥳*'
@@ -108,7 +113,7 @@ async function starts() {
 fxbot.on('CB:action,,call', async json => {
     const callerId = json[2][0][1].from;
     console.log("call dari "+ callerId)
-        fxbot.sendMessage(callerId, "Auto block system, don't call please", MessageType.text)
+        fxbot.sendMessage(callerId, "Sistema De Bloqueo Automático, NO LLAMES POR FAVOR", MessageType.text)
         await sleep(4000)
         await fxbot.blockUser(callerId, "add")
 })
@@ -226,6 +231,7 @@ fxbot.on('chat-update', async (mek) => {
 		const time = moment.tz('Asia/Jakarta').format('DD/MM HH:mm:ss')
         const type = Object.keys(mek.message)[0]
         body = (type === 'conversation' && mek.message.conversation.startsWith(prefix)) ? mek.message.conversation : (type == 'imageMessage') && mek.message.imageMessage.caption.startsWith(prefix) ? mek.message.imageMessage.caption : (type == 'videoMessage') && mek.message.videoMessage.caption.startsWith(prefix) ? mek.message.videoMessage.caption : (type == 'extendedTextMessage') && mek.message.extendedTextMessage.text.startsWith(prefix) ? mek.message.extendedTextMessage.text : ''
+        var pes = (type === 'conversation' && mek.message.conversation) ? mek.message.conversation : (type == 'imageMessage') && mek.message.imageMessage.caption ? mek.message.imageMessage.caption : (type == 'videoMessage') && mek.message.videoMessage.caption ? mek.message.videoMessage.caption : (type == 'extendedTextMessage') && mek.message.extendedTextMessage.text ? mek.message.extendedTextMessage.text : ''
 		budy = (type === 'conversation') ? mek.message.conversation : (type === 'extendedTextMessage') ? mek.message.extendedTextMessage.text : ''
 		const command = body.slice(0).trim().split(/ +/).shift().toLowerCase()
 		hit_today.push(command)
@@ -243,18 +249,20 @@ fxbot.on('chat-update', async (mek) => {
 		const isOwner = ownerNumber.includes(sender)
 		const isMe = botNumber.includes(senderme)
 		const isBanned = ban.includes(sender)
-//
+        const isNsfw = isGroup ? nsfw.includes(from) : false
 		const totalchat = await fxbot.chats.all()
 		const groupMetadata = isGroup ? await fxbot.groupMetadata(from) : ''
 		const groupName = isGroup ? groupMetadata.subject : ''
 		const groupId = isGroup ? groupMetadata.jid : ''
 		const groupMembers = isGroup ? groupMetadata.participants : ''
 		const groupDesc = isGroup ? groupMetadata.desc : ''
+		const messagesC = pes.slice(0).trim().split(/ +/).shift().toLowerCase()
 		const groupOwner = isGroup ? groupMetadata.owner : ''
 		const groupAdmins = isGroup ? getGroupAdmins(groupMembers) : ''
 		const isBotGroupAdmins = groupAdmins.includes(botNumber) || false
 		const isGroupAdmins = groupAdmins.includes(sender) || false
-        const isWelkom = isGroup ? welkom.includes(from) : false			 
+        const isWelkom = isGroup ? welkom.includes(from) : false		
+        const isAntiLink = isGroup ? antilink.includes(from) : false
         const conts = mek.key.fromMe ? fxbot.user.jid : fxbot.contacts[sender] || { notify: jid.replace(/@.+/, '') }
         const pushname = mek.key.fromMe ? fxbot.user.name : conts.notify || conts.vname || conts.name || '-'
        
@@ -264,6 +272,7 @@ fxbot.on('chat-update', async (mek) => {
 			wait: '「 ❗ 」 En Proceso, Aguarda!',
 			success: '「 ❗ 」 Uff Comando Con Exito',
 			wrongFormat: '「 ❗ 」 Wey No Seas Pendejo Escribe Bien El Formato',
+			nsfwoff: '「 ❗ 」La Funcion De Nsfw No Está Activa!',
 			error: {
 				stick: '「 ❗ 」F no se pudo convertir:/',
 				Iv: '「 ❗ 」Link Invalido Weon'
@@ -384,7 +393,7 @@ participant: `0@s.whatsapp.net`, ...(from ? { remoteJid: 'status@broadcast' } : 
 'mimetype': 'image/jpeg',
  'jpegThumbnail': fs.readFileSync('./stik/thumb.jpeg')
 },
-'title': `Hola ${pushname}`,
+'title': `Hola UwU ${pushname}`,
 'productImageCount': 9999
 },
 'businessOwnerJid': `0@s.whatsapp.net`
@@ -476,7 +485,7 @@ const faketokoforwaded = (teks) => {
             if (isAfk(mek.key.remoteJid)) return
             addafk(mek.key.remoteJid)
             heheh = ms(Date.now() - waktu) 
-            fxbot.sendMessage(mek.key.remoteJid,`@${owner} Actualmente el bot está fuera de linea!\n\n *Desde* ${alasan}\n *Hace :* ${heheh.hours} Horas, ${heheh.minutes} Minutos, ${heheh.seconds} Segundos lalu\n\nPor favor contacta de nuevo más tarde`, MessageType.text,{contextInfo:{ mentionedJid: [`${owner}@s.whatsapp.net`],'stanzaId': "B826873620DD5947E683E3ABE663F263", 'participant': "0@s.whatsapp.net", 'remoteJid': 'status@broadcast', 'quotedMessage': {"imageMessage": {"caption": "*OFFLINE*", 'jpegThumbnail': fs.readFileSync('./stik/thumb.jpeg')}}}})
+            fxbot.sendMessage(mek.key.remoteJid,`@${owner} Actualmente el bot está fuera de linea!\n\n *Desde* ${alasan}\n *Hace :* ${heheh.hours} Horas, ${heheh.minutes} Minutos, ${heheh.seconds} Segundos\n\nPor favor contacta de nuevo más tarde`, MessageType.text,{contextInfo:{ mentionedJid: [`${owner}@s.whatsapp.net`],'stanzaId': "B826873620DD5947E683E3ABE663F263", 'participant': "0@s.whatsapp.net", 'remoteJid': 'status@broadcast', 'quotedMessage': {"imageMessage": {"caption": "*OFFLINE*", 'jpegThumbnail': fs.readFileSync('./stik/thumb.jpeg')}}}})
             }
             }   
         if (mek.key.remoteJid.endsWith('@g.us') && offline) {
@@ -602,47 +611,47 @@ const getLevelingXp = (sender) => {
 			} 
 			/*[-- function rank --]*/
 			const levelRole = getLevelingLevel(sender)
-   	     var role = 'Esclavo'
+   	     var role = 'Bronze l'
    	     if (levelRole <= 3) {
-   	         role = 'Esclavo'
+   	         role = 'Bronze ll'
    	     } else if (levelRole <= 5) {
-   	         role = 'Private'
+   	         role = 'Bronze lll'
    	     } else if (levelRole <= 7) {
-   	         role = 'corporal'
+   	         role = 'Oro l'
    	     } else if (levelRole <= 8) {
-   	         role = 'Sergeant'
+   	         role = 'Oro ll'
    	     } else if (levelRole <= 9) {
-   	         role = 'staff sgt I'
+   	         role = 'Oro lll'
    	     } else if (levelRole <= 10) {
-   	         role = 'staff sgt II'
+   	         role = 'Platino l'
    	     } else if (levelRole <= 11) {
-   	         role = 'staff sgt II'
+   	         role = 'Platino ll'
    	     } else if (levelRole <= 12) {
-   	         role = 'Sgt 1st class I'
+   	         role = 'Platino lll'
    	     } else if (levelRole <= 13) {
-   	         role = 'Sgt 1st class II'
+   	         role = 'Diamante l'
    	     } else if (levelRole <= 14) {
-   	         role = 'Sgt 1st class III'
+   	         role = 'Diamante ll'
    	     } else if (levelRole <= 14) {
-   	         role = 'Ggt 1st class IV'
+   	         role = 'Diamante lll'
    	     } else if (levelRole <= 15) {
-   	         role = 'Master sgt I'
+   	         role = 'Diamante llll'
    	     } else if (levelRole <= 16) {
-   	         role = 'Master sgt II'
+   	         role = 'Heroico l'
    	     } else if (levelRole <= 17) {
-   	         role = 'Master sgt III'
+   	         role = 'Heroico ll'
    	     } else if (levelRole <= 18) {
-   	         role = 'Master sgt IV'
+   	         role = 'Heroico lll'
    	     } else if (levelRole <= 19) {
-   	         role = 'Master sgt V'
+   	         role = 'Gran Maestro l'
    	     } else if (levelRole <= 20) {
-   	         role = '2nd Lt I'
+   	         role = 'Gran Maestro ll'
    	     } else if (levelRole <= 21) {
-   	         role = '2nd Lt II'
+   	         role = 'Gran Maestro lll'
    	     } else if (levelRole <= 22) {
-   	         role = '2nd Lt III'
+   	         role = 'Lider Supremo'
    	     } else if (levelRole <= 23) {
-   	         role = '2nd Lt IV'
+   	         role = 'Titan😈'
    	     }
    //Function Level Up
 const levelup = (pushname, sender, getLevelingXp,  getLevel, getLevelingLevel, role) => {
@@ -669,19 +678,19 @@ const levelup = (pushname, sender, getLevelingXp,  getLevel, getLevelingLevel, r
 //=====================//      
          // Ucapan Waktu
         const hour_now = moment().format('HH')
-        var ucapanWaktu = 'Pagi Kawan👋'
+        var ucapanWaktu = 'Buenos Dias 🌝👋'
         if (hour_now >= '03' && hour_now <= '10') {
-          ucapanWaktu = 'Pagi Kawan👋'
+          ucapanWaktu = 'Buenos Dias 🌝👋'
         } else if (hour_now >= '10' && hour_now <= '14') {
-          ucapanWaktu = 'Siang Kawan👋'
+          ucapanWaktu = 'Buenas Tardes 🌆'
         } else if (hour_now >= '14' && hour_now <= '17') {
-          ucapanWaktu = 'Soree Kawan👋'
+          ucapanWaktu = 'Buenas Tardes 🌆'
         } else if (hour_now >= '17' && hour_now <= '18') {
-          ucapanWaktu = 'Selamat petang👋'
+          ucapanWaktu = 'Buenas Tardes 🌆'
         } else if (hour_now >= '18' && hour_now <= '23') {
-          ucapanWaktu = 'Malam Kawan🌚'
+          ucapanWaktu = 'Buenas Noches 🌚'
         } else {
-          ucapanWaktu = 'Selamat Malam🌚'
+          ucapanWaktu = 'Buenas Noches 🌚'
         }
 //========================================================================================================================//
 		colors = ['blue']
@@ -718,105 +727,126 @@ switch (command) {
     anu = process.uptime()
     runtem = `${kyun(anu)}`
 //
-    var menu = `  ┈┉•━─┉↯ INFORMACION ↯━─┉•┉┈
-
-- *Hits de hoy : ${hit_today.length}*
-- *Celular :* ${device_manufacturer}
-- *Modelo :* ${device_model}
-- *RAM :* ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)}MB / ${Math.round(require('os').totalmem / 1024 / 1024)}MB
-- *Android :* ${os_version}
-- *Versión de WhatsApp* : ${wa_version}
--  *Grupos :* ${giid.length}
-- *Chats :* ${totalchat.length - giid.length}
-- *Total de chat :* ${totalchat.length}
-- *Velocidad :* ${sepid.toFixed(4)} Second
-- *Tiempo Activo* ${runtem}
-- Prefix : 「 ${prefix} 」
-- Github : no lo se tu dime
-╭──┉↯ ꙅobᴎɒmoƆ ↯━─
-├┉↯ *${prefix}off*
-├┉↯ *${prefix}on*
-├┉↯ *${prefix}status*
-├┉↯ *${prefix}self*
-├┉↯ *${prefix}public*
-├┉↯ *${prefix}peson*
-├┉↯ *${prefix}pesoff*
-├┉↯ *${prefix}spam*
-├┉↯ *${prefix}mute*
-├┉↯ *${prefix}unmute*
-├┉↯ *${prefix}delete*
-├┉↯ *${prefix}setfake*
-├┉↯ *${prefix}setfakeimg*
-├┉↯ *${prefix}setprefix*
-├┉↯ *${prefix}setthumb*
-├┉↯ *${prefix}settarget*
-├┉↯ *${prefix}covidindo*
-├┉↯ *${prefix}covidworld*
-├┉↯ *${prefix}cnn*
-├┉↯ *${prefix}infogempa*
-├┉↯ *${prefix}get* [ google.com ]
-├┉↯ *${prefix}revip* [ 8.8.8.8 ]
-├┉↯ *${prefix}avatar*
-├┉↯ *${prefix}loli*
-├┉↯ *${prefix}waifu*
-├┉↯ *${prefix}husbu*
-├┉↯ *${prefix}image* [ random ]
-├┉↯ *${prefix}pinterest* [ random ]
-├┉↯ *${prefix}anime* [ random ]
-├┉↯ *${prefix}wallpaperanime*
-├┉↯ *${prefix}nsfwavatar* 
-├┉↯ *${prefix}nekopoi*  
-├┉↯ *${prefix}hentai* 
-├┉↯ *${prefix}sticker* [ image > sticker]
-├┉↯ *${prefix}swm* [ author|packname ]
-├┉↯ *${prefix}take* [ author|packname ]
-├┉↯ *${prefix}fdeface*
-├┉↯ *${prefix}emoji*
-├┉↯ *${prefix}attp*
-├┉↯ *${prefix}toimg* [ sticker > image ]
-├┉↯ *${prefix}tovid* [ sticker > video]
-├┉↯ *${prefix}tomp3* [ sticker > mp3]
-├┉↯ *${prefix}slow* [ video > slow ]
-├┉↯ *${prefix}fast* [ video > fast ]
-├┉↯ *${prefix}reverse* [ video > reverse ]
-├┉↯ *${prefix}tourl* [ image > url]
-├┉↯ *${prefix}upswteks*
-├┉↯ *${prefix}upswimage*
-├┉↯ *${prefix}upswvideo*
-├┉↯ *${prefix}herolist*
-├┉↯ *${prefix}herodetail* [ Barats ]
-├┉↯ *${prefix}igstalk* [username]
-├┉↯ *${prefix}ig* [ link ] 
-├┉↯ *${prefix}play* [ query ] 
-├┉↯ *${prefix}video* [ query ] 
-├┉↯ *${prefix}ytmp3* [ link ] 
-├┉↯ *${prefix}ytmp4* [ link ] 
-├┉↯ *${prefix}ytsearch* [ query ] 
-├┉↯ *${prefix}twitter* [ link ] 
-├┉↯ *${prefix}tiktok* [ link ] 
-├┉↯ *${prefix}tiktokaudio* [ link ] 
-├┉↯ *${prefix}fb* [ link ] 
-├┉↯ *${prefix}tiktokaudio* [ query ] 
-├┉↯ *${prefix}brainly* [ query ] 
-├┉↯ *${prefix}add* [ 687xx ]
-├┉↯ *${prefix}kick* [ tag ]
-├┉↯ *${prefix}promote* [ tag member ]
-├┉↯ *${prefix}demote* [ tag admin ]
-├┉↯ *${prefix}kontak* [ 628xx|aku ]
-├┉↯ *${prefix}hidetag* [ your message ]
-├┉↯ *${prefix}sticktag* [ sticker > tag ]
-├┉↯ *${prefix}giftag* [ gif > tag ]
-├┉↯ *${prefix}doctag* [ document > tag ]
-├┉↯ *${prefix}kontag* [ 687xx|aku > tag ]
-├┉↯ *${prefix}totag* [ media > tag ]
-├┉↯ *${prefix}ping*
-├┉↯ *${prefix}term* [ code ]
-├┉↯ *${prefix}runtime*
-├┉↯*${prefix}speed*
-╰──┉↯ ℱ𝓍ℬℴ𝓉↯━
-`
+    var menu = `╭───❏  *OWNER MENU*
+│⊷️ ${fx}${prefix}off${fx}
+│⊷️ ${fx}${prefix}on${fx}
+│⊷️ ${fx}${prefix}self${fx}
+│⊷️ ${fx}${prefix}public${fx}
+│⊷️ ${fx}${prefix}peson${fx}
+│⊷️ ${fx}${prefix}pesoff${fx}
+│⊷️ ${fx}${prefix}spam${fx}
+│⊷️ ${fx}${prefix}delete${fx}
+│⊷️ ${fx}${prefix}spam${fx}
+│⊷️ ${fx}${prefix}mute${fx}
+│⊷️ ${fx}${prefix}unmute${fx}
+│⊷️ ${fx}${prefix}delete${fx}
+│⊷️ ${fx}${prefix}setfake${fx}
+│⊷️ ${fx}${prefix}setfakeimg${fx}
+│⊷️ ${fx}${prefix}setprefix${fx}
+│⊷️ ${fx}${prefix}setthumb${fx}
+│⊷️ ${fx}${prefix}settarget${fx}
+╰───❏ 
+╭───❏  *INFO MENU*
+│⊷️ ${fx}${prefix}covidindo${fx}
+│⊷️ ${fx}${prefix}covidworld${fx}
+│⊷️ ${fx}${prefix}cnn${fx}
+│⊷️ ${fx}${prefix}infogempa${fx}
+│⊷️ ${fx}${prefix}get${fx}
+╰───❏ 
+╭───❏  *NSFW MENU
+│⊷️ ${fx}${prefix}revip${fx}
+│⊷️ ${fx}${prefix}avatar${fx}
+│⊷️ ${fx}${prefix}loli${fx}
+│⊷️ ${fx}${prefix}waifu${fx}
+│⊷️ ${fx}${prefix}husbu${fx}
+│⊷️ ${fx}${prefix}image${fx}
+│⊷️ ${fx}${prefix}pinterest${fx}
+│⊷️ ${fx}${prefix}anime${fx}
+│⊷️ ${fx}${prefix}wallpaperanime${fx}
+│⊷️ ${fx}${prefix}nsfwavatar${fx} 
+│⊷️ ${fx}${prefix}nekopoi${fx}  
+│⊷️ ${fx}${prefix}hentai${fx} 
+╰───❏ 
+╭───❏  *MENU BÁSICO*
+│⊷️ ${fx}${prefix}sticker${fx}
+│⊷️ ${fx}${prefix}swm${fx}
+│⊷️ ${fx}${prefix}take${fx}
+│⊷️ ${fx}${prefix}fdeface${fx}
+│⊷️ ${fx}${prefix}emoji${fx}
+│⊷️ ${fx}${prefix}attp${fx}
+╰───❏ 
+╭───❏  *CONVERTIDOR MENU*
+│⊷️ ${fx}${prefix}toimg${fx}
+│⊷️ ${fx}${prefix}tovid${fx}
+│⊷️ ${fx}${prefix}tomp3${fx} 
+│⊷️ ${fx}${prefix}slow${fx}
+│⊷️ ${fx}${prefix}fast${fx}
+│⊷️ ${fx}${prefix}reverse${fx}
+│⊷️ ${fx}${prefix}tourl${fx}
+╰───❏ 
+╭───❏  *MENU MENU*
+│⊷️ ${fx}${prefix}upswteks${fx}
+│⊷️ ${fx}${prefix}upswimage${fx}
+│⊷️ ${fx}${prefix}upswvideo${fx}
+╰───❏ 
+╭───❏  *DOWNLOAD MENU* 
+│⊷️ ${fx}${prefix}ig${fx} 
+│⊷️ ${fx}${prefix}play${fx}
+│⊷️ ${fx}${prefix}video${fx} 
+│⊷️ ${fx}${prefix}tiktok${fx} 
+│⊷️ ${fx}${prefix}tiktokaudio${fx} 
+│⊷️ ${fx}${prefix}fb${fx} 
+│⊷️ ${fx}${prefix}tiktokaudio${fx} 
+│⊷️ ${fx}${prefix}ytmp3${fx} 
+│⊷️ ${fx}${prefix}ytmp4${fx} 
+╰───❏ 
+╭───❏  *BÚSQUEDA MENU* 
+│⊷️ ${fx}${prefix}ytsearch${fx} 
+│⊷️ ${fx}${prefix}twitter${fx} 
+│⊷️ ${fx}${prefix}igstalk${fx}
+│⊷️ ${fx}${prefix}brainly${fx} 
+╰───❏ 
+╭───❏  *GRUPO MENU*
+│⊷️ ${fx}${prefix}add${fx} 
+│⊷️ ${fx}${prefix}kick${fx} 
+│⊷️ ${fx}${prefix}promote${fx} 
+│⊷️ ${fx}${prefix}demote${fx} 
+╰───❏ 
+╭───❏  *TAG MENU*
+│⊷️ ${fx}${prefix}contac${fx} 
+│⊷️ ${fx}${prefix}hidetag${fx} 
+│⊷️ ${fx}${prefix}sticktag${fx}
+│⊷️ ${fx}${prefix}giftag${fx}
+│⊷️ ${fx}${prefix}doctag${fx} 
+│⊷️ ${fx}${prefix}kontag${fx} 
+│⊷️ ${fx}${prefix}totag${fx}
+╰───❏ 
+╭───❏  *INFO BOT MENU*
+│⊷️ ${fx}${prefix}ping${fx}
+│⊷️ ${fx}${prefix}term${fx}
+│⊷️ ${fx}${prefix}runtime${fx}
+│⊷️ ${fx}${fx}${prefix}speed${fx}
+╰──❏`
         	faketokoforwaded(menu)
            	break
+case prefix+ 'antilink':
+                    if (!isGroup) return reply(mess.only.group)	 
+					if (!isGroupAdmins) return reply(mess.only.admin)
+					if (!isBotGroupAdmins) return reply(mess.only.Badmin)
+					if (args.length < 1) return reply('Hmmmm')
+					if (Number(args[0]) === 1) {
+						if (isAntiLink) return reply('Ya estaba activo 🙄')
+						antilink.push(from)
+						fs.writeFileSync('./database/antilink.json', JSON.stringify(antilink))
+						reply('Se activo con exito✔️')
+					} else if (Number(args[0]) === 0) {
+						antilink.splice(from, 1)
+						fs.writeFileSync('./database/antilink.json', JSON.stringify(antilink))
+						reply('Se desactivo con éxito la función de bienvenida en este grupo ✔️')
+					} else {
+						reply('1 para activar, 0 para desactivar')
+					}
+                    break
     case prefix+ 'on':
             if (!mek.key.fromMe) return 
             offline = false
@@ -884,6 +914,15 @@ break
 					  case prefix+ 'pesoff':
 					    fxbot.toggleDisappearingMessages(from, 0)
 					    break
+case prefix+ 'hits':
+                    var itsme = `0@s.whatsapp.net`
+			   	 var split = `Total De Hits: ${hit_today.length}`
+		     	   var selepbot =         {
+					contextInfo:   { participant: itsme, quotedMessage: { extendedTextMessage: { text: split,	}}}}
+                    teks = ('Hola Wenas Soy  Bot Y Estos Son Mis Hits, Posdata Cobre Vida')
+                    fxbot.sendMessage(from, teks, MessageType.text, selepbot, {quoted: mek })
+                    break
+
             case prefix+ 'spam':
                 if (!isMe) return reply('「 ❗ 」ESTE COMANDO SOLO PUEDE SER USADO POR MI')
                 if (!arg) return reply(`Usar ${prefix}spam teks|jumlahspam`)
@@ -1081,7 +1120,25 @@ case prefix+ 'pinterest':
             )
             });
             break
+case prefix+ 'nsfw':
+					if (!isGroup) return reply(`GROUP ONLY`)
+					if (!isGroupAdmins) return reply(mess.only.admin)
+				if (args.length < 1) return reply('「 ❗ 」 1 Para Activar, 0 Para Desactivar')
+				if (Number(args[0]) === 1) {
+				if (isNsfw) return reply(`「 ❗ 」La Funcion De Nsfw Ya Esta Activada En El Grupo!!`)
+				nsfw.push(from)
+				fs.writeFileSync('./database/nsfw.json', JSON.stringify(nsfw))
+				reply(`「 ❗ 」Activó con éxito la función NSFW en este grupo`)
+				} else if (Number(args[0]) === 0) {
+				nsfw.splice(from, 1)
+				fs.writeFileSync('./database/nsfw.json', JSON.stringify(nsfw))
+				reply(`「 ❗ 」Deshabilitó Con Éxito La Función De Nsfw En Este Grupo`)
+				} else {
+				reply('「 ❗ 」 1 Para Habilitar Y 0 Para Desactivar')
+				}
+				break
 	case prefix+ 'wallpaperanime':
+	if (!isNsfw) return reply(mess.nsfwoff)
 			wanime = await axios.get('https://nekos.life/api/v2/img/wallpaper')
 			bufwanime = await getBuffer(wanime.data.url)
 			fxbot.sendMessage(from, bufwanime, image, { quoted: mek })
@@ -1089,8 +1146,26 @@ case prefix+ 'pinterest':
 			return('Anuncio con errores de nuevo intente..')
 			})
 			break
+case prefix+ 'nsfw':
+					if (!isGroup) return reply(`GROUP ONLY`)
+					if (!isGroupAdmins) return reply(mess.only.admin)
+				if (args.length < 1) return reply('「 ❗ 」 1 Para Activar, 0 Para Desactivar')
+				if (Number(args[0]) === 1) {
+				if (isNsfw) return reply(`「 ❗ 」La Funcion De Nsfw Ya Esta Activada En El Grupo!!`)
+				nsfw.push(from)
+				fs.writeFileSync('./database/nsfw.json', JSON.stringify(nsfw))
+				reply(`「 ❗ 」Activó con éxito la función NSFW en este grupo`)
+				} else if (Number(args[0]) === 0) {
+				nsfw.splice(from, 1)
+				fs.writeFileSync('./database/nsfw.json', JSON.stringify(nsfw))
+				reply(`「 ❗ 」Deshabilitó Con Éxito La Función De Nsfw En Este Grupo`)
+				} else {
+				reply('「 ❗ 」 1 Para Habilitar Y 0 Para Desactivar')
+				}
+				break
 //HARAM FEATURE
 case prefix+ 'nsfwavatar':
+if (!isNsfw) return reply(mess.nsfwoff)
 			anu = await axios.get('https://nekos.life/api/v2/img/nsfw_avatar')
 				nsavatar = await getBuffer(anu.data.url)
 				fxbot.sendMessage(from, nsavatar, image, {quoted: mek})
@@ -1099,6 +1174,7 @@ case prefix+ 'nsfwavatar':
 			})	
 			break
 case prefix+ 'nekopoi':
+if (!isNsfw) return reply(mess.nsfwoff)
       ranp = getRandom('.gif')
       rano = getRandom('.webp')
 			anu = await axios.get('https://nekos.life/api/v2/img/nsfw_neko_gif')
@@ -1111,6 +1187,7 @@ case prefix+ 'nekopoi':
 			})
 			break
 case prefix+ 'pussy':
+if (!isNsfw) return reply(mess.nsfwoff)
       ranp = getRandom('.gif')
       rano = getRandom('.webp')
 			anu = await axios.get('https://nekos.life/api/v2/img/pussy')
@@ -1123,6 +1200,7 @@ case prefix+ 'pussy':
 			})
 			break
 case prefix+ 'pussyimage':
+if (!isNsfw) return reply(mess.nsfwoff)
   pusiimg = await axios.get('https://nekos.life/api/v2/img/pussy_jpg')
 			bufpusy = await getBuffer(pusiimg.data.url)
 				fxbot.sendMessage(from, bufpusy, MessageType.image, {quoted: mek})
@@ -1131,6 +1209,7 @@ case prefix+ 'pussyimage':
 			})
 			break
 case prefix+ 'oppai':
+if (!isNsfw) return reply(mess.nsfwoff)
 			opai = await axios.get('https://nekos.life/api/v2/img/tits')
 			opaiz = await getBuffer(opai.data.url)
 			fxbot.sendMessage(from, opaiz, image, { quoted: mek })
@@ -1139,6 +1218,7 @@ case prefix+ 'oppai':
 			})
 			break
 case prefix+ 'feetg':
+if (!isNsfw) return reply(mess.nsfwoff)
       ranp = getRandom('.gif')
       rano = getRandom('.webp')
 			anu = await axios.get('https://nekos.life/api/v2/img/feetg')
@@ -1652,9 +1732,13 @@ case prefix+ 'emoji':
             })
     		break
 case prefix+ 'attp':
-						if (args.length < 1) return reply(`Text Nya Mana Ajg?\n> *Contoh* : *${prefix}attp* _Aku Ganz_`)
-						attp2 = await getBuffer(`https://api.xteam.xyz/attp?file&text=${body.slice(6)}`)
-						fxbot.sendMessage(from, attp2, MessageType.sticker, {quoted: mek})
+						if (args.length < 1) return reply(`Y El Texto??\n> *Ejemplo* : *${prefix}attp* Felixcrack`)
+						 var itsme = `0@s.whatsapp.net`
+			   	 var split = `Texto De Colores UwU`
+		     	   var selepbot =         {
+					contextInfo:   { participant: itsme, quotedMessage: { extendedTextMessage: { text: split,	}}}}
+attp2 = await getBuffer(`https://api.xteam.xyz/attp?file&text=${body.slice(6)}`)
+fxbot.sendMessage(from, attp2, MessageType.sticker, selepbot, {quoted: mek })
 						break
 //MAKERIMAGE
 //COMINGSOON
@@ -2043,17 +2127,7 @@ case prefix+ 'google':
 	//Group Feature
 case prefix+ 'add':
 if (!isGroup) return reply(mess.only.group)
-if (!isGroupAdmins) return reply(mess.only.admin)
-if (!isBotGroupAdmins) return reply(mess.only.Badmin)
-if (args.length < 1) return reply('A Quien Quieres Agregar?')
-if (args[0].startsWith('08')) return reply('Usa El Código De Pais 😑🔪')
-try {
-num = `${args[0].replace(/ /g, '')}@s.whatsapp.net`
-fxbot.groupAdd(from, [num])
-} catch (e) {
-console.log('Error :', e)
-reply('No se pudo agregar el objetivo, tal vez porque en privado')
-}
+reply ('Comando Deshabilitado, Debido A Que Enviaba El Número Del Bot A Soporte.')
 break
 case prefix+ 'kick':
 if (!isGroup) return reply(mess.only.group)
@@ -2365,8 +2439,17 @@ case prefix+ 'bc':
 				
 //END BANG RAKIT SENDIRI YAA DAN JGN LUPA KASIH NAMA SAYA YG SUDAH MENGBANGUN INI SC :(
 
-default:
-
+default:            
+                    if (budy.startsWith('https://')){
+					if (!isGroup) return
+					if (!isAntiLink) return
+					if (isGroupAdmins) return reply('Te salvaste eres admin 🙂')
+					if (messagesC.includes("@62812874133914")) return reply("Permiso recibido")
+					var kic = `${sender.split("@")[0]}@s.whatsapp.net`
+					reply(`Enlace detectado😤 ${sender.split("@")[0]}`)
+					fxbot.groupRemove(from, [kic]).catch((e)=>{reply(`*ERR:* ${e}`)
+					}, 0)
+				    }
 if (budy.startsWith('$')){
                         if (!isMe) return 
                             var konsol = budy.slice(2)
