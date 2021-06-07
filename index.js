@@ -43,7 +43,7 @@ const ban = JSON.parse(fs.readFileSync('./database/banned.json'))
 const welkom = JSON.parse(fs.readFileSync('./database/welkom.json'))
 const antilink = JSON.parse(fs.readFileSync('./database/antilink.json'))
 const nsfw = JSON.parse(fs.readFileSync('./database/nsfw.json'))
-const image = JSON.parse(fs.readFileSync('./database/nsfw.json'))
+const image = JSON.parse(fs.readFileSync('./database/img.json'))
 const setting = JSON.parse(fs.readFileSync('./database/setting.json'))
 //Config
 const { covidindo } = require("./config/covidindo.js")
@@ -1245,11 +1245,11 @@ if (!isGroup) return reply(`「 ❗ 」ESTE COMANDO SOLO PUEDE SER USADO EN GRUP
 				if (Number(args[0]) === 1) {
 				if (isImage) return reply(`「 ❗ 」La Funcion De Nsfw Ya Esta Activada En El Grupo!!`)
 				nsfw.push(from)
-				fs.writeFileSync('./database/nsfw.json', JSON.stringify(nsfw))
+				fs.writeFileSync('./database/img.json', JSON.stringify(nsfw))
 				reply(`「 ❗ 」Activó con éxito la función NSFW en este grupo`)
 				} else if (Number(args[0]) === 0) {
 				nsfw.splice(from, 1)
-				fs.writeFileSync('./database/nsfw.json', JSON.stringify(nsfw))
+				fs.writeFileSync('./database/img.json', JSON.stringify(nsfw))
 				reply(`「 ❗ 」Deshabilitó Con Éxito La Función En Este Grupo`)
 				} else {
 				reply('「 ❗ 」 1 Para Habilitar Y 0 Para Desactivar')
