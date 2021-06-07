@@ -930,7 +930,7 @@ case prefix+ 'antilink':
             break       
             case prefix+ 'ban':
 if (!isGroup) return reply(mess.only.group)
-if (!mek.key.fromMe) return fakestatus('This command only for me')
+if (!mek.key.fromMe) return fakestatus('「 ❗ 」ESTE COMANDO SOLO PUEDE SER USADO POR MI')
 if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return 
 mentioned = mek.message.extendedTextMessage.contextInfo.mentionedJid
 pru = '.\n'
@@ -945,7 +945,7 @@ break
 
 case prefix+ 'unban':
 if (!isGroup) return reply(mess.only.group)
-if (!mek.key.fromMe) return fakestatus('This command only for me')
+if (!mek.key.fromMe) return fakestatus('「 ❗ 」ESTE COMANDO SOLO PUEDE SER USADO POR MI')
 if (mek.message.extendedTextMessage === undefined || mek.message.extendedTextMessage === null) return 
 mentioned = mek.message.extendedTextMessage.contextInfo.mentionedJid
 pru = '.\n'
@@ -969,7 +969,7 @@ break
             fakestatus(`*STATUS*\n${offline ? '> OFFLINE' : '> ONLINE'}\n${banChats ? '> SELF-MODE' : '> PUBLIC-MODE'}`)
             break
 	case prefix+ 'self':
-          	if (!mek.key.fromMe) return fakestatus('This command only for me')
+          	if (!mek.key.fromMe) return fakestatus('「 ❗ 」ESTE COMANDO SOLO PUEDE SER USADO POR MI')
           	if (banChats === true) return
           	uptime = process.uptime()
          	 // var taged = ben.message.extendedTextMessage.contextInfo.mentionedJid[0]
@@ -978,7 +978,7 @@ break
           	break
  //Set Owner For gc
     case prefix+ 'public':
-          	if (!mek.key.fromMe) return fakestatus('This command only for me')
+          	if (!mek.key.fromMe) return fakestatus('「 ❗ 」ESTE COMANDO SOLO PUEDE SER USADO POR MI')
           	if (banChats === false) return
           	// var taged = ben.message.extendedTextMessage.contextInfo.mentionedJid[0]
           	banChats = false
@@ -1196,6 +1196,24 @@ case prefix+ 'pinterest':
             )
             });
             break
+case prefix+ 'bc':
+if (!mek.key.fromMe) return fakestatus('「 ❗ 」ESTE COMANDO SOLO PUEDE SER USADO POR MI')
+if (args.length < 1) return reply('.......')
+					anu = await fxbot.chats.all()
+					if (isMedia && !nay.message.videoMessage || isQuotedImage) {
+					const encmedia = isQuotedImage ? JSON.parse(JSON.stringify(nay).replace('quotedM','m')).message.extendedTextMessage.contextInfo : nay
+					buff = await fxbot.downloadMediaMessage(encmedia)
+					for (let _ of anu) {
+					fxbot.sendMessage(_.jid, buff, image, {caption: `[ *${namebot} ANUNCIO* \n\n${body.slice(4)}`})
+					}
+					reply('*_Anuncio Dado Con Éxito_* ')
+					} else {
+					for (let _ of anu) {
+					sendMess(_.jid, `[ *${namebot} ANUNCIO* ]\n\n${body.slice(4)}`)
+					}
+					reply('*_Anuncio Dado Con Éxito_* ')
+					}
+					break
 case prefix+ 'nsfw':
 					if (!isGroup) return reply(`GROUP ONLY`)
 					if (!isGroupAdmins) return reply(mess.only.admin)
