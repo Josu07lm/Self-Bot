@@ -78,19 +78,19 @@ hit_today = []
 blocked = []
 banChats = false
 offline = false
-targetpc = '12603763944'
-owner = '12603763944'
-nombrebot = 'FX-72'
-fake = 'ℱℯ𝓁𝒾𝓍𝒸𝓇𝒶𝒸𝓀 ℬℴ𝓉'
+targetpc = setting.targetpc 
+owner = setting.ownerNumber
+nombrebot = setting.nombrebot
+fake = setting.fake
 numbernye = '0'
 tz = setting.tz 
 fx = setting.fx
 waktu = '-'
 alasan = '-'
-promote = '*Hola Bienvenido🥳*'
+promote = setting.promote
 numbernye = '0'
-demote = '*Jajajajajajaa ya no eres admin🤣*'
-leave = '\`\`\`Pedazo De Aborto 🥺👍🏿 Nunca Te Quisimos👋\`\`\`'
+demote = setting.demote
+leave = setting.leave
 //=================================================//
 async function starts() {
 	const fxbot = new WAConnection()
@@ -137,7 +137,6 @@ fxbot.on('CB:action,,call', async json => {
 ┃@${num.split('@')[0]}👋
 ┃BIENVENIDO AL GRUPO 
 ┃*${mdata.subject}*
-┃Usa ${prefix}fxbot\n┃Para Poder Usar El Bot
 ┗━━━━━━━━━━━━━━━━━
 ┏━━━━━━━━━━━━━━━━━
 ┃   「 *_BIENVENIDO_* 」
@@ -147,8 +146,6 @@ fxbot.on('CB:action,,call', async json => {
 ┠⊷️*http://bit.ly/2ZUH2jP
 ┠⊷️ *Grupo Oficial*:
 ┠⊷️ *http://bit.ly/3hpkba4
-┠⊷️ *Escribe ${prefix}fxbot
-┃⊷️ *Para Poder Usar El Bot*
 ┗━━━━━━━━━━━━━━━━━
 ┏━━━━━━━━━━━━━━━━━
 ┠⊷️「 *DESCRIPCIÓN* 」
@@ -927,6 +924,7 @@ case prefix+ 'antilink':
 						reply('1 para activar, 0 para desactivar')
 					}
                     break
+
     case prefix+ 'on':
             if (!mek.key.fromMe) return 
             offline = false
@@ -994,13 +992,25 @@ break
 					  case prefix+ 'pesoff':
 					    fxbot.toggleDisappearingMessages(from, 0)
 					    break
+case prefix+ 'tagall':
+                if (!isGroupAdmins) return reply(mess.only.admin)
+					if (!isGroup) return reply(mess.only.group)
+					var nom = mek.participant
+					members_id = []
+					teks = '\n'
+					for (let mem of groupMembers) {
+						teks += `├╼ @${mem.jid.split('@')[0]}\n`
+						members_id.push(mem.jid)
+					}
+					mentions(`*▢ Mensaje:* ${body.slice(8)}\n*▢ Grupo:*  ${groupName}\n*▢ Miembros:* ${groupMembers.length} \n*▢ Total De Admins:* ${groupAdmins.length}\n┌───⊷ *MENCIONES* ⊶`+teks+'└─────✪ FX ┃ ᴮᴼᵀ ✪───────* ', members_id, true)
+					break
 case prefix+ 'hits':
                     var itsme = `0@s.whatsapp.net`
 			   	 var split = `Total De Hits: ${hit_today.length}`
 		     	   var selepbot =         {
 					contextInfo:   { participant: itsme, quotedMessage: { extendedTextMessage: { text: split,	}}}}
                     teks = ('Hola Wenas Soy  Bot Y Estos Son Mis Hits, Posdata Cobre Vida')
-                    fxbot.sendMessage(from, teks, MessageType.text, selepbot, {quoted: mek })
+                    fxbot.sendMessage(from, teks, MessageType.text, selepbot, {quoted: mek }) 
                     break
 
             case prefix+ 'spam':
