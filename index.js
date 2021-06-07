@@ -825,7 +825,7 @@ switch (command) {
 │⊷️ ${fx}${prefix}ping${fx}
 │⊷️ ${fx}${prefix}term${fx}
 │⊷️ ${fx}${prefix}runtime${fx}
-│⊷️ ${fx}${fx}${prefix}speed${fx}
+│⊷️ ${fx}${prefix}speed${fx}
 ╰──❏`
         	faketokoforwaded(menu)
            	break
@@ -1571,6 +1571,7 @@ case prefix+ 'holoero':
     case prefix+ 'sg':
     case prefix+ 's':
             if ((isMedia && !mek.message.videoMessage || isQuotedImage) && args.length == 0) {
+            F = body.slice(6)				  
             const encmedia = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM', 'm')).message.extendedTextMessage.contextInfo : mek
             const media = await fxbot.downloadAndSaveMediaMessage(encmedia)
                 ran = '666.webp'
@@ -1625,6 +1626,7 @@ case prefix+ 'holoero':
 	case prefix+ 'stikerwm':
 	case prefix+ 'stickerwm':
     case prefix+ 'swm':
+    
             pe = args.join('')
             var a = pe.split("|")[0];
             var b = pe.split("|")[1];
@@ -1636,7 +1638,7 @@ case prefix+ 'holoero':
             ffmpeg(media)
             .on('error', (e) => {
             console.log(e)
-            fxbot.sendMessage(from, 'Terjadi kesalahan', 'conversation', { quoted: mek })
+            fxbot.sendMessage(from, 'Hay un error', 'conversation', { quoted: mek })
             fs.unlinkSync(media)
             })
             .on('end', () => {
@@ -1649,7 +1651,7 @@ case prefix+ 'holoero':
             fs.unlinkSync(media)
             })
             })
-            .addOutputOptions([`-vcodec`,`libwebp`,`-vf`,`scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse`])
+            .addOutputOptions([`-vcodec`,`libwebp`,`-vf`,`scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=1, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse`])
             .toFormat('webp')
             .save(out) 
             } else if ((isMedia && mek.message.videoMessage.seconds < 11 || isQuotedVideo && mek.message.extendedTextMessage.contextInfo.quotedMessage.videoMessage.seconds < 11) && args.length == 0) {
@@ -1676,7 +1678,7 @@ case prefix+ 'holoero':
             fs.unlinkSync(media)
             })
             })
-            .addOutputOptions([`-vcodec`,`libwebp`,`-vf`,`scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse`])
+            .addOutputOptions([`-vcodec`,`libwebp`,`-vf`,`scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=30, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse`])
             .toFormat('webp')
             .save(out)       
             } else {
@@ -1737,7 +1739,16 @@ case prefix+ 'attp':
 			   	 var split = `Texto De Colores UwU`
 		     	   var selepbot =         {
 					contextInfo:   { participant: itsme, quotedMessage: { extendedTextMessage: { text: split,	}}}}
-attp2 = await getBuffer(`https://api.xteam.xyz/attp?file&text=${body.slice(6)}`)
+attp2 = await getBuffer(`https://lolhuman.herokuapp.com/api/attp2?apikey=kingsboybot&text=${body.slice(6)}`)
+fxbot.sendMessage(from, attp2, MessageType.sticker, selepbot, {quoted: mek })
+						break
+case prefix+ 'attp2':
+						if (args.length < 1) return reply(`Y El Texto??\n> *Ejemplo* : *${prefix}attp* Felixcrack`)
+						 var itsme = `0@s.whatsapp.net`
+			   	 var split = `Texto De Colores UwU`
+		     	   var selepbot =         {
+					contextInfo:   { participant: itsme, quotedMessage: { extendedTextMessage: { text: split,	}}}}
+attp2 = await getBuffer(`https://lolhuman.herokuapp.com/api/attp?apikey=kingsboybot&text=${body.slice(6)}`)
 fxbot.sendMessage(from, attp2, MessageType.sticker, selepbot, {quoted: mek })
 						break
 //MAKERIMAGE
