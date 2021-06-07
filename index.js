@@ -1243,14 +1243,14 @@ if (!isGroup) return reply(`「 ❗ 」ESTE COMANDO SOLO PUEDE SER USADO EN GRUP
 					if (!isGroupAdmins) return reply(mess.only.admin)
 				if (args.length < 1) return reply('「 ❗ 」 1 Para Activar, 0 Para Desactivar')
 				if (Number(args[0]) === 1) {
-				if (isImage) return reply(`「 ❗ 」La Funcion De Nsfw Ya Esta Activada En El Grupo!!`)
+				if (isImage) return reply(`「 ❗ 」La Funcion De Imágenes Ya Esta Activada En El Grupo!!`)
 				nsfw.push(from)
 				fs.writeFileSync('./database/img.json', JSON.stringify(nsfw))
-				reply(`「 ❗ 」Activó con éxito la función NSFW en este grupo`)
+				reply(`「 ❗ 」Activó Con Éxito La Función De Imágenes En Este Grupo`)
 				} else if (Number(args[0]) === 0) {
 				nsfw.splice(from, 1)
 				fs.writeFileSync('./database/img.json', JSON.stringify(nsfw))
-				reply(`「 ❗ 」Deshabilitó Con Éxito La Función En Este Grupo`)
+				reply(`「 ❗ 」Deshabilitó Con Éxito La Función De Imágenes En Este Grupo`)
 				} else {
 				reply('「 ❗ 」 1 Para Habilitar Y 0 Para Desactivar')
 				}
