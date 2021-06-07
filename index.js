@@ -1255,6 +1255,18 @@ if (!isGroup) return reply(`「 ❗ 」ESTE COMANDO SOLO PUEDE SER USADO EN GRUP
 				reply('「 ❗ 」 1 Para Habilitar Y 0 Para Desactivar')
 				}
 				break
+case prefix+ 'grupo':
+					if (!isGroup) return reply(mess.only.group)
+					if (!isGroupAdmins) return reply(`「 ❗ 」NECESITAS SER ADMIN.`)
+					if (!isBotGroupAdmins) return reply(`「 ❗ 」ESTA FUNCION SOLO SE PUEDE USAR CUANDO EL BOT ES ADMIN.`)
+					if (args[0] === 'abrir') {
+					    reply(`*GRUPO ABIERTO CON ÉXITO ✓*`)
+						fxbot.groupSettingChange(from, GroupSettingChange.messageSend, false)
+					} else if (args[0] === 'cerrar') {
+						reply(`*GRUPO CERRADO CON ÉXITO✓*`)
+						fxbot.groupSettingChange(from, GroupSettingChange.messageSend, true)
+					}				 
+					break  
 	case prefix+ 'wallpaperanime':
 	if (!isNsfw) return reply(mess.nsfwoff)
 			wanime = await axios.get('https://nekos.life/api/v2/img/wallpaper')
