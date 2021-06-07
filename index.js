@@ -43,6 +43,7 @@ const ban = JSON.parse(fs.readFileSync('./database/banned.json'))
 const welkom = JSON.parse(fs.readFileSync('./database/welkom.json'))
 const antilink = JSON.parse(fs.readFileSync('./database/antilink.json'))
 const nsfw = JSON.parse(fs.readFileSync('./database/nsfw.json'))
+const image = JSON.parse(fs.readFileSync('./database/nsfw.json'))
 const setting = JSON.parse(fs.readFileSync('./database/setting.json'))
 //Config
 const { covidindo } = require("./config/covidindo.js")
@@ -251,6 +252,7 @@ fxbot.on('chat-update', async (mek) => {
 		const isMe = botNumber.includes(senderme)
 		const isBanned = ban.includes(sender)
         const isNsfw = isGroup ? nsfw.includes(from) : false
+        const isImage = isGroup ? nsfw.includes(from) : false
 		const totalchat = await fxbot.chats.all()
 		const groupMetadata = isGroup ? await fxbot.groupMetadata(from) : ''
 		const groupName = isGroup ? groupMetadata.subject : ''
@@ -275,6 +277,7 @@ fxbot.on('chat-update', async (mek) => {
 			wrongFormat: '「 ❗ 」 Wey No Seas Pendejo Escribe Bien El Formato',
 			waitmusic: '「 ❗ 」 Espera! Estoy buscando tu musica\nEn cuánto la encuentre la envío!!',
 			nsfwoff: '「 ❗ 」La Funcion De Nsfw No Está Activa!',
+			imageoff: '「 ❗ 」No Puedo Enviar Fotos Mientras No Esta Activa La Función!',
 			error: {
 				stick: '「 ❗ 」F no se pudo convertir:/',
 				Iv: '「 ❗ 」Link Invalido Weon'
@@ -1158,6 +1161,7 @@ case prefix+ 'avatar':
 			break
 //IMAGE
 case prefix+ 'image':
+if (!isImage) return reply(mess.imageoff)
             if (args.length < 1) return reply('¡Ingrese texto!')
             const gimg = args.join('');
             reply(mess.wait)
@@ -1216,7 +1220,7 @@ if (args.length < 1) return reply('.......')
 					}
 					break
 case prefix+ 'nsfw':
-					if (!isGroup) return reply(`GROUP ONLY`)
+					if (!isGroup) return reply(`「 ❗ 」ESTE COMANDO SOLO PUEDE SER USADO EN GRUPOS`)
 					if (!isGroupAdmins) return reply(mess.only.admin)
 				if (args.length < 1) return reply('「 ❗ 」 1 Para Activar, 0 Para Desactivar')
 				if (Number(args[0]) === 1) {
@@ -1232,6 +1236,25 @@ case prefix+ 'nsfw':
 				reply('「 ❗ 」 1 Para Habilitar Y 0 Para Desactivar')
 				}
 				break
+case prefix+ 'img':
+if (!isGroup) return reply(`「 ❗ 」ESTE COMANDO SOLO PUEDE SER USADO EN GRUPOS`)
+					if (!isGroupAdmins) return reply(mess.only.admin)
+					if (!isGroup) return reply(`「 ❗ 」ESTE COMANDO SOLO PUEDE SER USADO EN GRUPOS`)
+					if (!isGroupAdmins) return reply(mess.only.admin)
+				if (args.length < 1) return reply('「 ❗ 」 1 Para Activar, 0 Para Desactivar')
+				if (Number(args[0]) === 1) {
+				if (isImage) return reply(`「 ❗ 」La Funcion De Nsfw Ya Esta Activada En El Grupo!!`)
+				nsfw.push(from)
+				fs.writeFileSync('./database/nsfw.json', JSON.stringify(nsfw))
+				reply(`「 ❗ 」Activó con éxito la función NSFW en este grupo`)
+				} else if (Number(args[0]) === 0) {
+				nsfw.splice(from, 1)
+				fs.writeFileSync('./database/nsfw.json', JSON.stringify(nsfw))
+				reply(`「 ❗ 」Deshabilitó Con Éxito La Función En Este Grupo`)
+				} else {
+				reply('「 ❗ 」 1 Para Habilitar Y 0 Para Desactivar')
+				}
+				break
 	case prefix+ 'wallpaperanime':
 	if (!isNsfw) return reply(mess.nsfwoff)
 			wanime = await axios.get('https://nekos.life/api/v2/img/wallpaper')
@@ -1242,7 +1265,7 @@ case prefix+ 'nsfw':
 			})
 			break
 case prefix+ 'nsfw':
-					if (!isGroup) return reply(`GROUP ONLY`)
+					if (!isGroup) return reply(`「 ❗ 」ESTE COMANDO SOLO PUEDE SER USADO EN GRUPOS`)
 					if (!isGroupAdmins) return reply(mess.only.admin)
 				if (args.length < 1) return reply('「 ❗ 」 1 Para Activar, 0 Para Desactivar')
 				if (Number(args[0]) === 1) {
@@ -1326,7 +1349,7 @@ if (!isNsfw) return reply(mess.nsfwoff)
 			})
 			break
 case prefix+ 'welcome':  
-					if (!isGroup) return reply(`GROUP ONLY`)
+					if (!isGroup) return reply(`「 ❗ 」ESTE COMANDO SOLO PUEDE SER USADO EN GRUPOS`)
 					if (!isGroupAdmins) return reply(mess.only.admin)
 					if (args.length < 1) return reply('[❗] 1 Para activar/ 0 Para desactivar')
 					if (Number(args[0]) === 1) {
