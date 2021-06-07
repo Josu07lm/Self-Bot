@@ -1204,7 +1204,7 @@ if (args.length < 1) return reply('.......')
 					const encmedia = isQuotedImage ? JSON.parse(JSON.stringify(nay).replace('quotedM','m')).message.extendedTextMessage.contextInfo : nay
 					buff = await fxbot.downloadMediaMessage(encmedia)
 					for (let _ of anu) {
-					fxbot.sendMessage(_.jid, buff, image, {caption: `[ *${namebot} ANUNCIO* \n\n${body.slice(4)}`})
+					fxbot.sendMessage(_.jid, buff, image, {caption: `[ *${namebot} ANUNCIO* \n\n${body.slice(4)}`}, sendEphemeral: true}))
 					}
 					reply('*_Anuncio Dado Con Éxito_* ')
 					} else {
@@ -2535,26 +2535,7 @@ break//DONE
 
 //Maker
 
-case prefix+ 'bc':
-					if (!isMe) return reply('Solo Yo Puedo Usar Ese Comando...')
-					if (args.length < 1) return reply('.......')
-					const more = String.fromCharCode(8206)
-                    const readmore = more.repeat(4001)
-					anu = await fxbot.chats.all()
-					if (isMedia && !mek.message.videoMessage || isQuotedImage) {
-						const encmedia = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek
-						bc = await fxbot.downloadMediaMessage(encmedia)
-						for (let _ of anu) {
-							fxbot.sendMessage(_.jid, bc, image, {caption: `${body.slice(4)}\n> Permiso de transmisión`, sendEphemeral: true})
-						}
-						reply('_Anuncio Dado Con Exito_')
-					} else {
-						for (let _ of anu) {
-							sendMess(_.jid,`${body.slice(4)}` + readmore + `\n>ANUNCIO`)
-						}
-						reply('_Anuncio Dado Con Exito_')
-					}
-					break
+
 					case prefix+ 'level':
                 if (!isGroup) return reply(mess.only
 .group)
