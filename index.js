@@ -1248,6 +1248,7 @@ case prefix+ 'welcome':
 					}
 					break  
 case prefix+ 'bj':
+if (!isNsfw) return reply(mess.nsfwoff)
       ranp = getRandom('.gif')
       rano = getRandom('.webp')
 			anu = await axios.get('https://nekos.life/api/v2/img/bj')
@@ -1260,6 +1261,7 @@ case prefix+ 'bj':
 			})
 			break
 case prefix+ 'ero':
+if (!isNsfw) return reply(mess.nsfwoff)
 			eroz = await axios.get('https://nekos.life/api/v2/img/ero')
 			bufero = await getBuffer(eroz.data.url)
 			fxbot.sendMessage(from, bufero, image, { quoted: mek })
@@ -1268,6 +1270,7 @@ case prefix+ 'ero':
 			})
 			break
 case prefix+ 'erokemo':
+if (!isNsfw) return reply(mess.nsfwoff)
 			erokz = await axios.get('https://nekos.life/api/v2/img/erokemo')
 			erokzs = await getBuffer(erokz.data.url)
 			fxbot.sendMessage(from, erokzs, image, { quoted: mek })
@@ -1276,6 +1279,7 @@ case prefix+ 'erokemo':
 			})
 			break
 case prefix+ 'eroyuri':
+if (!isNsfw) return reply(mess.nsfwoff)
 			eroyuriz = await axios.get('https://nekos.life/api/v2/img/eroyuri')
 			buferoyu = await getBuffer(opai.data.url)
 			fxbot.sendMessage(from, buferoyu, image, { quoted: mek })
@@ -1284,6 +1288,7 @@ case prefix+ 'eroyuri':
 			})
 			break
 case prefix+ 'tickle':
+if (!isNsfw) return reply(mess.nsfwoff)
       ranp = getRandom('.gif')
       rano = getRandom('.webp')
 			anu = await axios.get('https://nekos.life/api/v2/img/tickle')
@@ -1296,6 +1301,7 @@ case prefix+ 'tickle':
 			})
 			break
 case prefix+ 'feed':
+if (!isNsfw) return reply(mess.nsfwoff)
       ranp = getRandom('.gif')
       rano = getRandom('.webp')
 			anu = await axios.get('https://nekos.life/api/v2/img/feed')
@@ -1308,6 +1314,7 @@ case prefix+ 'feed':
 			})
 			break
 case prefix+ 'kuni':
+if (!isNsfw) return reply(mess.nsfwoff)
       ranp = getRandom('.gif')
       rano = getRandom('.webp')
 			anu = await axios.get('https://nekos.life/api/v2/img/kuni')
@@ -1320,6 +1327,7 @@ case prefix+ 'kuni':
 			})
 			break
 case prefix+ 'femdom':
+if (!isNsfw) return reply(mess.nsfwoff)
       anu = await axios.get('https://nekos.life/api/v2/img/femdom')
 			bupemdom = await getBuffer(anu.data.url)
 				fxbot.sendMessage(from, bupemdom, image, {quoted: mek})
@@ -1328,11 +1336,13 @@ case prefix+ 'femdom':
 			})
 			break
 case prefix+ 'futanari':
+if (!isNsfw) return reply(mess.nsfwoff)
 			futan = await axios.get('https://nekos.life/api/v2/img/futanari')
 			futanz = await getBuffer(futan.data.url)
 			fxbot.sendMessage(from, futanz, image, { quoted: mek })
 			break
 case prefix+ 'les':
+if (!isNsfw) return reply(mess.nsfwoff)
       ranp = getRandom('.gif')
       rano = getRandom('.webp')
 			anu = await axios.get('https://nekos.life/api/v2/img/les')
@@ -1345,6 +1355,7 @@ case prefix+ 'les':
 			})
 			break
 case prefix+ 'trap':
+if (!isNsfw) return reply(mess.nsfwoff)
 			trapx = await axios.get('https://nekos.life/api/v2/img/tits')
 			traps = await getBuffer(trapx.data.url)
 			fxbot.sendMessage(from, traps, image, { quoted: mek })
@@ -1353,6 +1364,7 @@ case prefix+ 'trap':
 			})
 			break
 case prefix+ 'pat':
+if (!isNsfw) return reply(mess.nsfwoff)
       ranp = getRandom('.gif')
       rano = getRandom('.webp')
 			anu = await axios.get('https://nekos.life/api/v2/img/pat')
@@ -1365,6 +1377,7 @@ case prefix+ 'pat':
 			})
 			break
 case prefix+ 'boobs':
+if (!isNsfw) return reply(mess.nsfwoff)
       ranp = getRandom('.gif')
       rano = getRandom('.webp')
 			anu = await axios.get('https://nekos.life/api/v2/img/boobs')
@@ -1377,6 +1390,7 @@ case prefix+ 'boobs':
 			})
 			break
 case prefix+ 'blowjob':
+if (!isNsfw) return reply(mess.nsfwoff)
 			blowz = await axios.get('https://nekos.life/api/v2/img/blowjob')
 			bufblowz = await getBuffer(blowz.data.url)
 			fxbot.sendMessage(from, bufblowz, image, {quoted: mek})
@@ -1385,6 +1399,7 @@ case prefix+ 'blowjob':
 			})
 			break
 	case prefix+ 'hentai':
+	if (!isNsfw) return reply(mess.nsfwoff)
 			hentaiz = await axios.get('https://nekos.life/api/v2/img/hentai')
 			bufhtz = await getBuffer(hentaiz.data.url)
 			fxbot.sendMessage(from, bufhtz, image, {quoted: mek})
@@ -1393,6 +1408,7 @@ case prefix+ 'blowjob':
 			})
 			break
 	case prefix+ 'hololewed':
+	if (!isNsfw) return reply(mess.nsfwoff)
 			hololew = await axios.get('https://nekos.life/api/v2/img/hololewd')
 			hololewx = await getBuffer(hololew.data.url)
 			fxbot.sendMessage(from, hololewx, image, { quoted: mek })
@@ -1401,12 +1417,14 @@ case prefix+ 'blowjob':
 			})
 			break
 case prefix+ 'lewd':
+if (!isNsfw) return reply(mess.nsfwoff)
 			lewdd = await axios.get('https://nekos.life/api/v2/img/lewd')
 			buflewd = await getBuffer(lewdd.data.url)
 			fxbot.sendMessage(from, buflewd, image, { quoted: mek })
 			
 			break
 	case prefix+ 'lewdk':
+	if (!isNsfw) return reply(mess.nsfwoff)
 			lewdkk = await axios.get('https://nekos.life/api/v2/img/lewdk')
 			lewdkz = await getBuffer(lewdkz.data.url)
 			fxbot.sendMessage(from, lewdkz, image, { quoted: mek })
@@ -1446,6 +1464,7 @@ case prefix+ 'lewdkemo':
 			})
 			break
 case prefix+ 'goose':
+if (!isNsfw) return reply(mess.nsfwoff)
       ranp = getRandom('.gif')
       rano = getRandom('.webp')
 			anu = await axios.get('https://nekos.life/api/v2/img/goose')
@@ -1470,6 +1489,7 @@ case prefix+ 'solog':
 			})
 			break
 case prefix+ 'yuri':
+if (!isNsfw) return reply(mess.nsfwoff)
 			yuriz = await axios.get('https://nekos.life/api/v2/img/tits')
 			bupyuri = await getBuffer(yuriz.data.url)
 			fxbot.sendMessage(from, bupyuri, image, { quoted: mek })
@@ -1478,6 +1498,7 @@ case prefix+ 'yuri':
 			})
 			break
 	case prefix+ 'anal':
+	if (!isNsfw) return reply(mess.nsfwoff)
       ranp = getRandom('.gif')
       rano = getRandom('.webp')
 			anu = await axios.get('https://nekos.life/api/v2/img/anal')
@@ -1490,6 +1511,7 @@ case prefix+ 'yuri':
 			})
 			break		
 case prefix+ 'pwankg':
+if (!isNsfw) return reply(mess.nsfwoff)
       ranp = getRandom('.gif')
       rano = getRandom('.webp')
 			anu = await axios.get('https://nekos.life/api/v2/img/pwankg')
@@ -1502,6 +1524,7 @@ case prefix+ 'pwankg':
 			})
 			break
 case prefix+ 'eron':
+if (!isNsfw) return reply(mess.nsfwoff)
 			eronz = await axios.get('https://nekos.life/api/v2/img/eron')
 			buferon = await getBuffer(eronz.data.url)
 			fxbot.sendMessage(from, buferon, image, { quoted: mek })
@@ -1510,6 +1533,7 @@ case prefix+ 'eron':
 			})
 			break
 case prefix+ 'kiss':
+if (!isNsfw) return reply(mess.nsfwoff)
       ranp = getRandom('.gif')
       rano = getRandom('.webp')
 			anu = await axios.get('https://nekos.life/api/v2/img/kiss')
@@ -1522,6 +1546,7 @@ case prefix+ 'kiss':
 			})
 			break
 case prefix+ 'keta':
+if (!isNsfw) return reply(mess.nsfwoff)
 			ketaz = await axios.get('https://nekos.life/api/v2/img/keta')
 			bufketa = await getBuffer(ketaz.data.url)
 			fxbot.sendMessage(from, bufketa, image, { quoted: mek })
@@ -1530,6 +1555,7 @@ case prefix+ 'keta':
 			})
 			break
 case prefix+ 'cum':
+if (!isNsfw) return reply(mess.nsfwoff)
       ranp = getRandom('.gif')
       rano = getRandom('.webp')
 			anu = await axios.get('https://nekos.life/api/v2/img/cum')
@@ -1542,6 +1568,7 @@ case prefix+ 'cum':
 			})
 			break
 case prefix+ 'cumimage':
+if (!isNsfw) return reply(mess.nsfwoff)
 			cumjpg = await axios.get('https://nekos.life/api/v2/img/cum_jpg')
 			bupjpg = await getBuffer(cumjpg.data.url)
 			fxbot.sendMessage(from, bupjpg, image, { quoted: mek })
@@ -1550,6 +1577,7 @@ case prefix+ 'cumimage':
 			})
 			break
 case prefix+ 'oppai':
+if (!isNsfw) return reply(mess.nsfwoff)
 			opai = await axios.get('https://nekos.life/api/v2/img/tits')
 			opaiz = await getBuffer(opai.data.url)
 			fxbot.sendMessage(from, opaiz, image, { quoted: mek })
@@ -1558,6 +1586,7 @@ case prefix+ 'oppai':
 			})
 			break
 case prefix+ 'holoero':
+if (!isNsfw) return reply(mess.nsfwoff)
 		holox = await axios.get('https://nekos.life/api/v2/img/holoero')
 			bufholox = await getBuffer(holox.data.url)
 			fxbot.sendMessage(from, bufholox, image, { quoted: mek })
