@@ -79,6 +79,7 @@ banChats = false
 offline = false
 targetpc = '12603763944'
 owner = '12603763944'
+nombrebot = 'FX-72'
 fake = 'ℱℯ𝓁𝒾𝓍𝒸𝓇𝒶𝒸𝓀 ℬℴ𝓉'
 numbernye = '0'
 tz = setting.tz 
@@ -1200,16 +1201,16 @@ case prefix+ 'bc':
 if (!mek.key.fromMe) return fakestatus('「 ❗ 」ESTE COMANDO SOLO PUEDE SER USADO POR MI')
 if (args.length < 1) return reply('.......')
 					anu = await fxbot.chats.all()
-					if (isMedia && !nay.message.videoMessage || isQuotedImage) {
-					const encmedia = isQuotedImage ? JSON.parse(JSON.stringify(nay).replace('quotedM','m')).message.extendedTextMessage.contextInfo : nay
-					buff = await fxbot.downloadMediaMessage(encmedia)
+					if (isMedia && !mek.message.videoMessage || isQuotedImage) {
+					const encmedia = isQuotedImage ? JSON.parse(JSON.stringify(mek).replace('quotedM','m')).message.extendedTextMessage.contextInfo : mek
+					bc = await fxbot.downloadMediaMessage(encmedia)
 					for (let _ of anu) {
-					fxbot.sendMessage(_.jid, buff, image, {caption: `[ *${namebot} ANUNCIO* \n\n${body.slice(4)}`}, sendEphemeral: true}))
+					fxbot.sendMessage(_.jid, buff, image, {caption: `[ *${nombrebot} ANUNCIO* \n\n${body.slice(4)}`, sendEphemeral: true})
 					}
 					reply('*_Anuncio Dado Con Éxito_* ')
 					} else {
 					for (let _ of anu) {
-					sendMess(_.jid, `[ *${namebot} ANUNCIO* ]\n\n${body.slice(4)}`)
+					sendMess(_.jid, `[ *${nombrebot} ANUNCIO* ]\n\n${body.slice(4)}`)
 					}
 					reply('*_Anuncio Dado Con Éxito_* ')
 					}
