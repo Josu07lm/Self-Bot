@@ -272,6 +272,7 @@ fxbot.on('chat-update', async (mek) => {
 			wait: '「 ❗ 」 En Proceso, Aguarda!',
 			success: '「 ❗ 」 Uff Comando Con Exito',
 			wrongFormat: '「 ❗ 」 Wey No Seas Pendejo Escribe Bien El Formato',
+			waitmusic: '「 ❗ 」 Espera! Estoy buscando tu musica\nEn cuánto la encuentre la envío!!',
 			nsfwoff: '「 ❗ 」La Funcion De Nsfw No Está Activa!',
 			error: {
 				stick: '「 ❗ 」F no se pudo convertir:/',
@@ -821,6 +822,17 @@ switch (command) {
 │⊷️ ${fx}${prefix}kontag${fx} 
 │⊷️ ${fx}${prefix}totag${fx}
 ╰───❏ 
+╭───❏  *CREACIÓN MENU*
+│⊷️ ${fx}${prefix}snowtext${fx} 
+│⊷️ ${fx}${prefix}glitchtext${fx} 
+│⊷️ ${fx}${prefix}shadow${fx}
+│⊷️ ${fx}${prefix}naruto${fx}
+│⊷️ ${fx}${prefix}underwater${fx} 
+│⊷️ ${fx}${prefix}smoke${fx} 
+│⊷️ ${fx}${prefix}candy${fx}
+│⊷️ ${fx}${prefix}lava${fx}
+│⊷️ ${fx}${prefix}taza${fx}
+╰───❏ 
 ╭───❏  *INFO BOT MENU*
 │⊷️ ${fx}${prefix}ping${fx}
 │⊷️ ${fx}${prefix}term${fx}
@@ -829,6 +841,70 @@ switch (command) {
 ╰──❏`
         	faketokoforwaded(menu)
            	break
+
+case prefix+ 'snowtext':
+				if (args.length < 1) return reply(`[❗] Ejemplo??\n*${prefix}${command} Felixcrack*`)
+				reply(mess.wait)
+				F = body.slice(10)				  
+				anu = await getBuffer(`https://api.xteam.xyz/textpro/snowtext?text=${F}&APIKEY=10b9f9398549cb23`)
+				fxbot.sendMessage(from, anu, image, {caption: `𝐹𝑒𝑙𝑖𝑥𝑐𝑟𝑎𝑐𝑘 𝐵𝑂𝑇`, quoted: mek })
+				break
+case prefix+ 'glitchtext':
+				if (args.length < 1) return reply(`[❗] Ejemplo??\n*${prefix}${command} Felixcrack*`)
+				reply(mess.wait)
+				F = body.slice(11)				  
+				anu = await getBuffer(`https://api.xteam.xyz/textpro/glitch?text=${F}=Api&APIKEY=10b9f9398549cb23`)
+				fxbot.sendMessage(from, anu, image, {caption: `𝐹𝑒𝑙𝑖𝑥𝑐𝑟𝑎𝑐𝑘 𝐵𝑂𝑇`, quoted: mek })
+				break
+case prefix+ 'lava':
+				if (args.length < 1) return reply(`[❗] Ejemplo??\n*${prefix}${command} Felixcrack*`)
+				reply(mess.wait)
+				F = body.slice(5)				  
+				anu = await getBuffer(`https://api.xteam.xyz/textpro/lava?text=${F}&APIKEY=10b9f9398549cb23`)
+				fxbot.sendMessage(from, anu, image, {caption: `𝐹𝑒𝑙𝑖𝑥𝑐𝑟𝑎𝑐𝑘 𝐵𝑂𝑇`, quoted: mek })
+				break
+case prefix+ 'shadow':
+				if (args.length < 1) return reply(`[❗] Ejemplo??\n*${prefix}${command} Felixcrack*`)
+				reply(mess.wait)
+				F = body.slice(7)				  
+				anu = await getBuffer(`https://api-rull.herokuapp.com/api/Photooxy/shadow?text=${F}`)
+				fxbot.sendMessage(from, anu, image, {caption: `𝐹𝑒𝑙𝑖𝑥𝑐𝑟𝑎𝑐𝑘 𝐵𝑂𝑇`, quoted: mek })
+				break
+case prefix+ 'naruto':
+				if (args.length < 1) return reply(`[❗] Ejemplo??\n*${prefix}${command} Felixcrack*`)
+				reply(mess.wait)
+				F = body.slice(7)				  
+				anu = await getBuffer(`http://hadi-api.herokuapp.com/api/photoxy/manga-naruto?teks=${F}`)
+				fxbot.sendMessage(from, anu, image, {caption: `𝐹𝑒𝑙𝑖𝑥𝑐𝑟𝑎𝑐𝑘 𝐵𝑂𝑇`, quoted: mek })
+				break
+case prefix+ 'underwater':
+				if (args.length < 1) return reply(`[❗] Ejemplo??\n*${prefix}${command} Felixcrack*`)
+				reply(mess.wait)
+				F = body.slice(11)				  
+				anu = await getBuffer(`https://api.xteam.xyz/photooxy/underwaterocean?text=${F}&APIKEY=10b9f9398549cb23`)
+				fxbot.sendMessage(from, anu, image, {caption: `𝐹𝑒𝑙𝑖𝑥𝑐𝑟𝑎𝑐𝑘 𝐵𝑂𝑇`, quoted: mek })
+				break
+case prefix+ 'smoke':
+				if (args.length < 1) return reply(`[❗] Ejemplo??\n*${prefix}${command} Felixcrack*`)
+				reply(mess.wait)
+				F = body.slice(6)				  
+				anu = await getBuffer(`https://api.xteam.xyz/photooxy/smoke?text=${F}&APIKEY=10b9f9398549cb23`)
+				fxbot.sendMessage(from, anu, image, {caption: `𝐹𝑒𝑙𝑖𝑥𝑐𝑟𝑎𝑐𝑘 𝐵𝑂𝑇`, quoted: mek })
+				break
+case prefix+ 'candy':
+				if (args.length < 1) return reply(`[❗] Ejemplo??\n*${prefix}${command} Felixcrack*`)
+				reply(mess.wait)
+				F = body.slice(6)				  
+				anu = await getBuffer(`https://api-rull.herokuapp.com/api/Photooxy/candy?text=${F}`)
+				fxbot.sendMessage(from, anu, image, {caption: `𝐹𝑒𝑙𝑖𝑥𝑐𝑟𝑎𝑐𝑘 𝐵𝑂𝑇`, quoted: mek })
+				break
+case prefix+ 'taza':
+				if (args.length < 1) return reply(`[❗] Ejemplo??\n*${prefix}${command} Felixcrack*`)
+				reply(mess.wait)
+				F = body.slice(5)				  
+				anu = await getBuffer(`https://api-rull.herokuapp.com/api/Photooxy/textoncup?text=${F}`)
+				fxbot.sendMessage(from, anu, image, {caption: `𝐹𝑒𝑙𝑖𝑥𝑐𝑟𝑎𝑐𝑘 𝐵𝑂𝑇`, quoted: mek })
+				break
 case prefix+ 'antilink':
                     if (!isGroup) return reply(mess.only.group)	 
 					if (!isGroupAdmins) return reply(mess.only.admin)
