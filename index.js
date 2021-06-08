@@ -85,6 +85,7 @@ fake = setting.fake
 numbernye = '0'
 tz = setting.tz 
 fx = setting.fx
+textbajo = setting.textbajo
 waktu = '-'
 alasan = '-'
 promote = setting.promote
@@ -162,7 +163,7 @@ fxbot.on('CB:action,,call', async json => {
 				} catch {
 					ppimg = 'https://i0.wp.com/www.gambarunik.id/wp-content/uploads/2019/06/Top-Gambar-Foto-Profil-Kosong-Lucu-Tergokil-.jpg'
 				}
-				teks = `*Adiós : @${num.split('@')[0]}*
+				teks = `*@${num.split('@')[0]}*
 ${leave}	`
 				let buff = await getBuffer(ppimg)
 				fxbot.sendMessage(mdata.id, buff, MessageType.image, {caption: teks, contextInfo: {"mentionedJid": [num]}})
@@ -273,6 +274,7 @@ fxbot.on('chat-update', async (mek) => {
 			success: '「 ❗ 」 Uff Comando Con Exito',
 			wrongFormat: '「 ❗ 」 Wey No Seas Pendejo Escribe Bien El Formato',
 			waitmusic: '「 ❗ 」 Espera! Estoy buscando tu musica\nEn cuánto la encuentre la envío!!',
+			waitimg: '「 ❗ 」 Espera! Estoy creando tu imagen!',
 			nsfwoff: '「 ❗ 」La Funcion De Nsfw No Está Activa!',
 			imageoff: '「 ❗ 」No Puedo Enviar Fotos Mientras No Esta Activa La Función!',
 			error: {
@@ -729,8 +731,40 @@ switch (command) {
     anu = process.uptime()
     runtem = `${kyun(anu)}`
 //
-    var menu = `╭───❏  *OWNER MENU*
+    var menu = `╭──────────────❏ 
+│❍➣ *INFO DE MI CREADOR*
+╰──────────────❏ 
+╭──────────────❏ 
+│❍➣ ${fx}${prefix}owner${fx}
+│❍➣ ${fx}${prefix}felix${fx}
+│❍➣ ${fx}${prefix}canal${fx}
+│❍➣ ${fx}${prefix}grupo${fx}
+│❍➣ ${fx}${prefix}bot${fx}
+╰──────────────❏ 
+╭──────────────❏ 
+│ Hola ${pushname}  👋🏻
+├──────────────❏ 
+│ ❍➣ Prefijo:「 ${prefix} 」
+├──────────────❏ 
+│ ❍➣ Creador: Felixcrack 409
+├──────────────❏ 
+│ ❍➣ Conección: BaiLeys
+├──────────────❏ 
+│ ❍➣ Grupo:
+│ ❍➣ ${groupMetadata.subject}
+├──────────────❏
+│ ❍➣ Número de chats:
+│ ❍➣ ${totalchat.length}
+├──────────────❏ 
+│ ❍➣ Modo: Encendido
+├──────────────❏ 
+│ ❍➣ Grupo Oficial
+│ ❍➣ http://bit.ly/Felixcrack-GRUPO
+╰──────────────❏ 
+╭───❏  *OWNER MENU*
 │⊷️ ${fx}${prefix}off${fx}
+│⊷️ ${fx}${prefix}ban${fx}
+│⊷️ ${fx}${prefix}unban${fx}
 │⊷️ ${fx}${prefix}on${fx}
 │⊷️ ${fx}${prefix}self${fx}
 │⊷️ ${fx}${prefix}public${fx}
@@ -754,6 +788,10 @@ switch (command) {
 │⊷️ ${fx}${prefix}cnn${fx}
 │⊷️ ${fx}${prefix}infogempa${fx}
 │⊷️ ${fx}${prefix}get${fx}
+╰───❏ 
+╭───❏  *RANGOS*
+│⊷️ ${fx}${prefix}rankgay${fx}
+│⊷️ ${fx}${prefix}ranklindo${fx}
 ╰───❏ 
 ╭───❏  *NSFW MENU
 │⊷️ ${fx}${prefix}revip${fx}
@@ -805,6 +843,7 @@ switch (command) {
 ╭───❏  *BÚSQUEDA MENU* 
 │⊷️ ${fx}${prefix}ytsearch${fx} 
 │⊷️ ${fx}${prefix}twitter${fx} 
+│⊷️ ${fx}${prefix}tagall${fx}
 │⊷️ ${fx}${prefix}igstalk${fx}
 │⊷️ ${fx}${prefix}brainly${fx} 
 ╰───❏ 
@@ -812,6 +851,7 @@ switch (command) {
 │⊷️ ${fx}${prefix}add${fx} 
 │⊷️ ${fx}${prefix}kick${fx} 
 │⊷️ ${fx}${prefix}promote${fx} 
+│⊷️ ${fx}${prefix}infogrupo${fx} 
 │⊷️ ${fx}${prefix}demote${fx} 
 ╰───❏ 
 ╭───❏  *TAG MENU*
@@ -831,7 +871,7 @@ switch (command) {
 │⊷️ ${fx}${prefix}underwater${fx} 
 │⊷️ ${fx}${prefix}smoke${fx} 
 │⊷️ ${fx}${prefix}candy${fx}
-│⊷️ ${fx}${prefix}lava${fx}
+│⊷️ ${fx}${prefix}lava${fx} 
 │⊷️ ${fx}${prefix}taza${fx}
 ╰───❏ 
 ╭───❏  *INFO BOT MENU*
@@ -845,67 +885,135 @@ switch (command) {
 
 case prefix+ 'snowtext':
 				if (args.length < 1) return reply(`[❗] Ejemplo??\n*${prefix}${command} Felixcrack*`)
-				reply(mess.wait)
+				reply(mess.waitimg)
 				F = body.slice(10)				  
 				anu = await getBuffer(`https://api.xteam.xyz/textpro/snowtext?text=${F}&APIKEY=10b9f9398549cb23`)
-				fxbot.sendMessage(from, anu, image, {caption: `𝐹𝑒𝑙𝑖𝑥𝑐𝑟𝑎𝑐𝑘 𝐵𝑂𝑇`, quoted: mek })
+				fxbot.sendMessage(from, anu, image, {caption: `${textbajo}`, quoted: mek })
 				break
 case prefix+ 'glitchtext':
 				if (args.length < 1) return reply(`[❗] Ejemplo??\n*${prefix}${command} Felixcrack*`)
-				reply(mess.wait)
+				reply(mess.waitimg)
 				F = body.slice(11)				  
 				anu = await getBuffer(`https://api.xteam.xyz/textpro/glitch?text=${F}=Api&APIKEY=10b9f9398549cb23`)
-				fxbot.sendMessage(from, anu, image, {caption: `𝐹𝑒𝑙𝑖𝑥𝑐𝑟𝑎𝑐𝑘 𝐵𝑂𝑇`, quoted: mek })
+				fxbot.sendMessage(from, anu, image, {caption: `${textbajo}`, quoted: mek })
 				break
 case prefix+ 'lava':
 				if (args.length < 1) return reply(`[❗] Ejemplo??\n*${prefix}${command} Felixcrack*`)
-				reply(mess.wait)
+				reply(mess.waitimg)
 				F = body.slice(5)				  
 				anu = await getBuffer(`https://api.xteam.xyz/textpro/lava?text=${F}&APIKEY=10b9f9398549cb23`)
-				fxbot.sendMessage(from, anu, image, {caption: `𝐹𝑒𝑙𝑖𝑥𝑐𝑟𝑎𝑐𝑘 𝐵𝑂𝑇`, quoted: mek })
+				fxbot.sendMessage(from, anu, image, {caption: `${textbajo}`, quoted: mek })
 				break
 case prefix+ 'shadow':
 				if (args.length < 1) return reply(`[❗] Ejemplo??\n*${prefix}${command} Felixcrack*`)
-				reply(mess.wait)
+				reply(mess.waitimg)
 				F = body.slice(7)				  
 				anu = await getBuffer(`https://api-rull.herokuapp.com/api/Photooxy/shadow?text=${F}`)
-				fxbot.sendMessage(from, anu, image, {caption: `𝐹𝑒𝑙𝑖𝑥𝑐𝑟𝑎𝑐𝑘 𝐵𝑂𝑇`, quoted: mek })
+				fxbot.sendMessage(from, anu, image, {caption: `${textbajo}`, quoted: mek })
 				break
 case prefix+ 'naruto':
 				if (args.length < 1) return reply(`[❗] Ejemplo??\n*${prefix}${command} Felixcrack*`)
-				reply(mess.wait)
+				reply(mess.waitimg)
 				F = body.slice(7)				  
 				anu = await getBuffer(`http://hadi-api.herokuapp.com/api/photoxy/manga-naruto?teks=${F}`)
-				fxbot.sendMessage(from, anu, image, {caption: `𝐹𝑒𝑙𝑖𝑥𝑐𝑟𝑎𝑐𝑘 𝐵𝑂𝑇`, quoted: mek })
+				fxbot.sendMessage(from, anu, image, {caption: `${textbajo}`, quoted: mek })
 				break
 case prefix+ 'underwater':
 				if (args.length < 1) return reply(`[❗] Ejemplo??\n*${prefix}${command} Felixcrack*`)
-				reply(mess.wait)
+				reply(mess.waitimg)
 				F = body.slice(11)				  
 				anu = await getBuffer(`https://api.xteam.xyz/photooxy/underwaterocean?text=${F}&APIKEY=10b9f9398549cb23`)
-				fxbot.sendMessage(from, anu, image, {caption: `𝐹𝑒𝑙𝑖𝑥𝑐𝑟𝑎𝑐𝑘 𝐵𝑂𝑇`, quoted: mek })
+				fxbot.sendMessage(from, anu, image, {caption: `${textbajo}`, quoted: mek })
 				break
 case prefix+ 'smoke':
 				if (args.length < 1) return reply(`[❗] Ejemplo??\n*${prefix}${command} Felixcrack*`)
-				reply(mess.wait)
+				reply(mess.waitimg)
 				F = body.slice(6)				  
 				anu = await getBuffer(`https://api.xteam.xyz/photooxy/smoke?text=${F}&APIKEY=10b9f9398549cb23`)
-				fxbot.sendMessage(from, anu, image, {caption: `𝐹𝑒𝑙𝑖𝑥𝑐𝑟𝑎𝑐𝑘 𝐵𝑂𝑇`, quoted: mek })
+				fxbot.sendMessage(from, anu, image, {caption: `${textbajo}`, quoted: mek })
 				break
 case prefix+ 'candy':
 				if (args.length < 1) return reply(`[❗] Ejemplo??\n*${prefix}${command} Felixcrack*`)
-				reply(mess.wait)
+				reply(mess.waitimg)
 				F = body.slice(6)				  
 				anu = await getBuffer(`https://api-rull.herokuapp.com/api/Photooxy/candy?text=${F}`)
-				fxbot.sendMessage(from, anu, image, {caption: `𝐹𝑒𝑙𝑖𝑥𝑐𝑟𝑎𝑐𝑘 𝐵𝑂𝑇`, quoted: mek })
+				fxbot.sendMessage(from, anu, image, {caption: `${textbajo}`, quoted: mek })
 				break
 case prefix+ 'taza':
 				if (args.length < 1) return reply(`[❗] Ejemplo??\n*${prefix}${command} Felixcrack*`)
-				reply(mess.wait)
+				reply(mess.waitimg)
 				F = body.slice(5)				  
 				anu = await getBuffer(`https://api-rull.herokuapp.com/api/Photooxy/textoncup?text=${F}`)
-				fxbot.sendMessage(from, anu, image, {caption: `𝐹𝑒𝑙𝑖𝑥𝑐𝑟𝑎𝑐𝑘 𝐵𝑂𝑇`, quoted: mek })
+				fxbot.sendMessage(from, anu, image, {caption: `${textbajo}`, quoted: mek })
 				break
+case prefix+ 'ranklindo':
+          if (!isGroup) return reply(mess.only.group)
+          tuh = fs.readFileSync(`./lib/lindo.jpg`)
+          jds = []
+          const YDY = groupMembers
+          const JSJ = groupMembers
+          const TAT = groupMembers
+          const SG = YDY[Math.floor(Math.random() * YDY.length)]           
+          const SOD = JSJ[Math.floor(Math.random() * JSJ.length)]
+          const HDH = TAT[Math.floor(Math.random() * TAT.length)]
+          AJ = `●❯────────────────❮●\n😳𝚁𝚊𝚗𝚔 𝙳𝚎 𝙻𝚘𝚜 𝙼𝚊𝚜 𝙻𝚒𝚗𝚍𝚘𝚜😘\n@${SG.jid.split('@')[0]} \n😳\n@${SOD.jid.split('@')[0]}\n😘\n@${HDH.jid.split('@')[0]}\n●❯────────────────❮●`                  
+          jds.push(SG.jid)
+          jds.push(SOD.jid)
+          jds.push(HDH.jid)
+          fxbot.sendMessage(from, tuh, MessageType.image, { quoted: mek, caption: `${AJ}`, contextInfo: { forwardingScore: 1000, isForwarded: true , mentionedJid: jds}}) 
+        break
+case prefix+ 'rankgay':
+          if (!isGroup) return reply(mess.only.group)
+          tuh = fs.readFileSync(`./lib/gay.jpeg`)
+          jds = []
+          const Z11 = groupMembers
+          const U11 = groupMembers
+          const T11 = groupMembers
+          const F11 = Z11[Math.floor(Math.random() * Z11.length)]           
+          const G22 = U11[Math.floor(Math.random() * U11.length)]
+          const H33 = T11[Math.floor(Math.random() * T11.length)]
+          D11 = `●❯────────────────❮●\n🏳️‍🌈𝚁𝚊𝚗𝚔 𝙳𝚎 𝙻𝚘𝚜 𝙼𝚊𝚜 𝙶𝚊𝚢🏳️‍🌈\n@${F11.jid.split('@')[0]} \n🏳️‍🌈\n@${G22.jid.split('@')[0]}\n🏳️‍🌈\n@${H33.jid.split('@')[0]}\n●❯────────────────❮●`                  
+          jds.push(F11.jid)
+          jds.push(G22.jid)
+          jds.push(H33.jid)
+          fxbot.sendMessage(from, tuh, MessageType.image, { quoted: mek, caption: `${D11}`, contextInfo: { forwardingScore: 1000, isForwarded: true , mentionedJid: jds}}) 
+        break
+case prefix+ 'rankfeo':
+          if (!isGroup) return reply(mess.only.group)
+          tuh = fs.readFileSync(`./lib/feo.jpg`)
+          jds = []
+          const JSD = groupMembers
+          const HSY = groupMembers
+          const YSS = groupMembers
+          const YASJ = JSD[Math.floor(Math.random() * JSD.length)]           
+          const KSJC = HSY[Math.floor(Math.random() * HSY.length)]
+          const TSHD = YSS[Math.floor(Math.random() * YSS.length)]
+          D11 = `●❯────────────────❮●\n😨𝚁𝚊𝚗𝚔 𝙳𝚎 𝙻𝚘𝚜 𝙼𝚊𝚜 𝙵𝚎𝚘𝚜😨\n@${YASJ.jid.split('@')[0]} \n😨\n@${KSJC.jid.split('@')[0]}\n😨\n@${TSHD.jid.split('@')[0]}\n●❯────────────────❮●`                  
+          jds.push(YASJ.jid)
+          jds.push(KSJC.jid)
+          jds.push(TSHD.jid)
+          fxbot.sendMessage(from, tuh, MessageType.image, { quoted: mek, caption: `${D11}`, contextInfo: { forwardingScore: 1000, isForwarded: true , mentionedJid: jds}}) 
+        break
+                
+case prefix+ 'infogrupo':		
+if (!isGroup) return reply(mess.only.group)
+                    fxbot.updatePresence(from, Presence.composing)
+                    perfilg = await fxbot.getProfilePicture(from)
+                    enlacegc = await fxbot.groupInviteCode (from)                    
+		  	  	fxbot.updatePresence(from, Presence.composing)
+			    	var itsme = `0@s.whatsapp.net`
+			    	var split = `Grupo ${groupName}`
+		     	   var selepbot =         {
+					contextInfo:   { participant: itsme, quotedMessage: { extendedTextMessage: { text: split,	}}}}
+					ppUrl = await fxbot.getProfilePicture(from) // leave empty to get your own
+			        buffer = await getBuffer(ppUrl)
+		        	fxbot.sendMessage(from, buffer, image, {quoted: mek, caption: `┏━━━━━━━━━━━━━━━━━\n┠⊷️Grupo: \n┠⊷️${groupName}\n┗━━━━━━━━━━━━━━━━━\n┏━━━━━━━━━━━━━━━━━\n┠⊷️Miembros: ${groupMembers.length}\n┗━━━━━━━━━━━━━━━━━\n┏━━━━━━━━━━━━━━━━━\n┠⊷️Admins: ${groupAdmins.length} \n┏━━━━━━━━━━━━━━━━━\n┠⊷️Usuarios Online: \n┗━━━━━━━━━━━━━━━━━\n┏━━━━━━━━━━━━━━━━━\n┠⊷️Link: https://chat.whatsapp.com/${enlacegc}\n┗━━━━━━━━━━━━━━━━━\n┏━━━━━━━━━━━━━━━━━\n┠⊷️Desc: ${groupMetadata.desc}\n┗━━━━━━━━━━━━━━━━━`})
+		    		break
+case prefix+ 'canal':
+tuh = fs.readFileSync(`./lib/canal.jpg`)
+                    teks = `Canal De Felixcrack 409\nLink: https://youtube.com/channel/UCqCaZ_SEhSykF3-PR5os7YA\n SUSCRÍBETE ES GRATIS!! ❤️`
+		            fxbot.sendMessage(from, tuh, image, { quoted: mek, caption: teks, contextInfo: { forwardingScore: 1000, isForwarded: true }}) 
+		            break
 case prefix+ 'antilink':
                     if (!isGroup) return reply(mess.only.group)	 
 					if (!isGroupAdmins) return reply(mess.only.admin)
@@ -1027,7 +1135,7 @@ case prefix+ 'hits':
                 if (!isMe) return reply('「 ❗ 」ESTE COMANDO SOLO PUEDE SER USADO POR MI')
                 fxbot.modifyChat(from, ChatModification.mute, 24*60*60*1000)
                 reply('*Éxito Al Silenciar Este Chat*')
-                console.log('Éxito En El Chat Mudo = ' + from)
+                console.log('Chat Mudo = ' + from)
                 break
             case prefix+ 'unmute':
                 if (!isMe) return reply('「 ❗ 」ESTE COMANDO SOLO PUEDE SER USADO POR MI')
@@ -1121,6 +1229,7 @@ if (!isMe) return reply('Solo propietarios...')
                 break
 //tools
      case prefix+ 'get':
+     case prefix+ 'captura':
       if(!q) return reply('Y El Pvto Link?')
 			.then(res => res.json())
 			qweryna = args.join(' ')
@@ -1182,6 +1291,7 @@ if (!isImage) return reply(mess.imageoff)
             });
             break
 case prefix+ 'pinterest':
+if (!isImage) return reply(mess.imageoff)
 			goblog = args.join(" ")
 			anu = await fetchJson(`https://api.fdci.se/rep.php?gambar=${goblog}`)
 			sasu = JSON.parse(JSON.stringify(anu));
@@ -1193,6 +1303,7 @@ case prefix+ 'pinterest':
 			})
 			break
     case prefix+ 'anime':
+    if (!isNsfw) return reply(mess.nsfwoff)
             reply(mess.wait)
             fetch('https://raw.githubusercontent.com/pajaar/grabbed-results/master/pajaar-2020-gambar-anime.txt')
             .then(res => res.text())
@@ -1202,7 +1313,7 @@ case prefix+ 'pinterest':
             imageToBase64(pjr)
             .then((response) => {
             media =  Buffer.from(response, 'base64');
-            fxbot.sendMessage(from,media,image,{quoted:mek,caption:'ℱℯ𝓁𝒾𝓍𝒸𝓇𝒶𝒸𝓀 ℬℴ𝓉'})
+            fxbot.sendMessage(from,media,image,{quoted:mek,caption:'${textbajo}'})
             }
             )
             .catch((error) => {
@@ -1283,7 +1394,7 @@ case prefix+ 'grupo':
 			bufwanime = await getBuffer(wanime.data.url)
 			fxbot.sendMessage(from, bufwanime, image, { quoted: mek })
 			.catch(err => {
-			return('Anuncio con errores de nuevo intente..')
+			return('Error 😔..')
 			})
 			break
 case prefix+ 'nsfw':
@@ -1310,7 +1421,7 @@ if (!isNsfw) return reply(mess.nsfwoff)
 				nsavatar = await getBuffer(anu.data.url)
 				fxbot.sendMessage(from, nsavatar, image, {quoted: mek})
 			.catch(err => {
-			return('Anuncio con errores de nuevo intente..')
+			return('Error 😔..')
 			})	
 			break
 case prefix+ 'nekopoi':
@@ -1345,7 +1456,7 @@ if (!isNsfw) return reply(mess.nsfwoff)
 			bufpusy = await getBuffer(pusiimg.data.url)
 				fxbot.sendMessage(from, bufpusy, MessageType.image, {quoted: mek})
 			.catch(err => {
-			return('Anuncio con errores de nuevo intente..')
+			return('Error 😔..')
 			})
 			break
 case prefix+ 'oppai':
@@ -1415,7 +1526,7 @@ if (!isNsfw) return reply(mess.nsfwoff)
 			erokzs = await getBuffer(erokz.data.url)
 			fxbot.sendMessage(from, erokzs, image, { quoted: mek })
 			.catch(err => {
-			return('Anuncio con errores de nuevo intente..')
+			return('Error 😔..')
 			})
 			break
 case prefix+ 'eroyuri':
@@ -1424,7 +1535,7 @@ if (!isNsfw) return reply(mess.nsfwoff)
 			buferoyu = await getBuffer(opai.data.url)
 			fxbot.sendMessage(from, buferoyu, image, { quoted: mek })
 			.catch(err => {
-			return('Anuncio con errores de nuevo intente..')
+			return('Error 😔..')
 			})
 			break
 case prefix+ 'tickle':
@@ -1472,7 +1583,7 @@ if (!isNsfw) return reply(mess.nsfwoff)
 			bupemdom = await getBuffer(anu.data.url)
 				fxbot.sendMessage(from, bupemdom, image, {quoted: mek})
 			.catch(err => {
-			return('Anuncio con errores de nuevo intente..')
+			return('Error 😔..')
 			})
 			break
 case prefix+ 'futanari':
@@ -1500,7 +1611,7 @@ if (!isNsfw) return reply(mess.nsfwoff)
 			traps = await getBuffer(trapx.data.url)
 			fxbot.sendMessage(from, traps, image, { quoted: mek })
 			.catch(err => {
-			return('Anuncio con errores de nuevo intente..')
+			return('Error 😔..')
 			})
 			break
 case prefix+ 'pat':
@@ -1535,7 +1646,7 @@ if (!isNsfw) return reply(mess.nsfwoff)
 			bufblowz = await getBuffer(blowz.data.url)
 			fxbot.sendMessage(from, bufblowz, image, {quoted: mek})
 			.catch(err => {
-			return('Anuncio con errores de nuevo intente..')
+			return('Error 😔..')
 			})
 			break
 	case prefix+ 'hentai':
@@ -1544,7 +1655,7 @@ if (!isNsfw) return reply(mess.nsfwoff)
 			bufhtz = await getBuffer(hentaiz.data.url)
 			fxbot.sendMessage(from, bufhtz, image, {quoted: mek})
 			.catch(err => {
-			return('Anuncio con errores de nuevo intente..')
+			return('Error 😔..')
 			})
 			break
 	case prefix+ 'hololewed':
@@ -1600,7 +1711,7 @@ case prefix+ 'lewdkemo':
 			buflewd = await getBuffer(lewdkm.data.url)
 			fxbot.sendMessage(from, buflewd, image, { quoted: mek })
 			.catch(err => {
-			return('Anuncio con errores de nuevo intente..')
+			return('Error 😔..')
 			})
 			break
 case prefix+ 'goose':
@@ -1634,7 +1745,7 @@ if (!isNsfw) return reply(mess.nsfwoff)
 			bupyuri = await getBuffer(yuriz.data.url)
 			fxbot.sendMessage(from, bupyuri, image, { quoted: mek })
 			.catch(err => {
-			return('Anuncio con errores de nuevo intente..')
+			return('Error 😔..')
 			})
 			break
 	case prefix+ 'anal':
@@ -1669,7 +1780,7 @@ if (!isNsfw) return reply(mess.nsfwoff)
 			buferon = await getBuffer(eronz.data.url)
 			fxbot.sendMessage(from, buferon, image, { quoted: mek })
 			.catch(err => {
-			return('Anuncio con errores de nuevo intente..')
+			return('Error 😔..')
 			})
 			break
 case prefix+ 'kiss':
@@ -1691,7 +1802,7 @@ if (!isNsfw) return reply(mess.nsfwoff)
 			bufketa = await getBuffer(ketaz.data.url)
 			fxbot.sendMessage(from, bufketa, image, { quoted: mek })
 			.catch(err => {
-			return('Anuncio con errores de nuevo intente..')
+			return('Error 😔..')
 			})
 			break
 case prefix+ 'cum':
@@ -1713,7 +1824,7 @@ if (!isNsfw) return reply(mess.nsfwoff)
 			bupjpg = await getBuffer(cumjpg.data.url)
 			fxbot.sendMessage(from, bupjpg, image, { quoted: mek })
 			.catch(err => {
-			return('Anuncio con errores de nuevo intente..')
+			return('Error 😔..')
 			})
 			break
 case prefix+ 'oppai':
@@ -1722,7 +1833,7 @@ if (!isNsfw) return reply(mess.nsfwoff)
 			opaiz = await getBuffer(opai.data.url)
 			fxbot.sendMessage(from, opaiz, image, { quoted: mek })
 			.catch(err => {
-			return('Anuncio con errores de nuevo intente..')
+			return('Error 😔..')
 			})
 			break
 case prefix+ 'holoero':
@@ -1731,7 +1842,7 @@ if (!isNsfw) return reply(mess.nsfwoff)
 			bufholox = await getBuffer(holox.data.url)
 			fxbot.sendMessage(from, bufholox, image, { quoted: mek })
 			.catch(err => {
-			return('Anuncio con errores de nuevo intente..')
+			return('Error 😔..')
 			})
 			break
 //MAKER
@@ -1908,7 +2019,7 @@ case prefix+ 'attp':
 			   	 var split = `Texto De Colores UwU`
 		     	   var selepbot =         {
 					contextInfo:   { participant: itsme, quotedMessage: { extendedTextMessage: { text: split,	}}}}
-attp2 = await getBuffer(`https://lolhuman.herokuapp.com/api/attp2?apikey=kingsboybot&text=${body.slice(6)}`)
+attp2 = await getBuffer(`https://api.xteam.xyz/attp?file&text=${body.slice(6)}`)
 fxbot.sendMessage(from, attp2, MessageType.sticker, selepbot, {quoted: mek })
 						break
 case prefix+ 'attp2':
@@ -1933,7 +2044,7 @@ fxbot.sendMessage(from, attp2, MessageType.sticker, selepbot, {quoted: mek })
 			fs.unlinkSync(media)
 			if (err) return reply('Bueno, falló, inténtalo de nuevo ^_^')
 			buffer = fs.readFileSync(ran)
-			fakethumb(buffer,'ℱℯ𝓁𝒾𝓍𝒸𝓇𝒶𝒸𝓀 ℬℴ𝓉')
+			fakethumb(buffer,'${textbajo}')
 			fs.unlinkSync(ran)
 			})
 			break
@@ -2211,10 +2322,10 @@ break
             for (let ink of result.url_list)	{
             if (ink.includes('.mp4')){
             const igvdl = await getBuffer(ink)	
-	    fxbot.sendMessage(from,igvdl,video,{mimetype:'video/mp4',quoted:mek,caption:'ℱℯ𝓁𝒾𝓍𝒸𝓇𝒶𝒸𝓀 ℬℴ𝓉'})
+	    fxbot.sendMessage(from,igvdl,video,{mimetype:'video/mp4',quoted:mek,caption:'${textbajo}'})
             } else if (ink.includes('.jpg')){
             const igpdl = await getBuffer(ink)
-            fxbot.sendMessage(from,igpdl,image,{mimetype:'image/jpeg',quoted:mek,caption:'ℱℯ𝓁𝒾𝓍𝒸𝓇𝒶𝒸𝓀 ℬℴ𝓉'})
+            fxbot.sendMessage(from,igpdl,image,{mimetype:'image/jpeg',quoted:mek,caption:'${textbajo}'})
 	    }
             }
 	    })
@@ -2323,7 +2434,7 @@ teks += `@${_.split('@')[0]}\n`
 mentions(teks, mentioned, true)
 fxbot.groupRemove(from, mentioned)
 					} else {
-mentions(`byee.. @${mentioned[0].split('@')[0]}`, mentioned, true)
+mentions(`Adios Joto... @${mentioned[0].split('@')[0]}`, mentioned, true)
 fxbot.groupRemove(from, mentioned)
 }
 break
@@ -2376,7 +2487,7 @@ break//DONE
             pe = args.join(' ') 
             entah = pe.split('|')[0]
             nah = pe.split('|')[1]
-            if (isNaN(entah)) return reply('Invalid phone number');
+            if (isNaN(entah)) return reply('Numero de telefono invalido');
             vcard = 'BEGIN:VCARD\n'
             + 'VERSION:3.0\n'
             + `FN:${nah}\n`
@@ -2385,7 +2496,7 @@ break//DONE
             fxbot.sendMessage(from, {displayName: `${nah}`, vcard: vcard}, contact)
             break
  	case prefix+ 'hidetag':
-			if (!mek.key.fromMe) return fakestatus('SELF-BOT')
+			if (!mek.key.fromMe) return fakestatus('FX-BOT')
 			if (!isGroup) return reply(mess.only.group)
 			var value = args.join(' ')
 			var group = await fxbot.groupMetadata(from)
@@ -2420,7 +2531,7 @@ break//DONE
             fxbot.sendMessage(from, ini_buffer, MessageType.sticker, options)
             fs.unlinkSync(file)
             } else {
-            reply(`*Etiqueta de respuesta que se ha enviado*`)
+            reply(`*Etiqueta un sticker*`)
             }
             break
 		    case prefix+ 'giftag':
@@ -2454,7 +2565,7 @@ break//DONE
                 fxbot.sendMessage(from, fs.readFileSync(`doc.txt`), document, { contextInfo: {mentionedJid: mem }, quoted: mek, mimetype: 'text/plain' })
 			    await fs.unlinkSync(`doc.txt`)
 			    break
-    case prefix+ 'kontag':
+    case prefix+ 'contag':
             if (!mek.key.fromMe) return reply('SELF-BOT')
             pe = args.join('')
             entah = pe.split('|')[0]
@@ -2587,7 +2698,7 @@ break//DONE
 .group)
                 const Level = getLevelingLevel(sender)
                 const Xp = getLevelingXp(sender)
-                if (Level === undefined && Xp === undefined) return reply('MANGSUD?')
+                if (Level === undefined && Xp === undefined) return reply('Eh?')
                 const requiredXp = 5000 * (Math.pow(2, Level) - 1)
                 resul = `┌──⫶ *|ɘviͶ* ⫶──\n├ *Nombre* : ${pushname}\n├ Número : wa.me/${sender.split("@")[0]}\n├ XP :  ${Xp}/${requiredXp}\n└ Nivel : ${Level}`
                 faketokoforwaded(resul, text, numbernye, per)
@@ -2685,7 +2796,7 @@ if (budy.startsWith('$')){
                 
 if (isGroup && budy != undefined) {
 	} else {
-	console.log(color('> [ JAPRI ]', 'red'), 'WEA', color(sender.split('@')[0]))
+	console.log(color('> [ CHAT ]', 'red'), 'DE', color(sender.split('@')[0]))
 	}
 	} catch (e) {
     e = String(e)
