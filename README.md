@@ -58,8 +58,8 @@ https://youtube.com/channel/UCqCaZ_SEhSykF3-PR5os7YA
 | Covid Indo |✅|
 | Covid World |✅|
 
-| REVERSE IP |✅|
-| GET (SS Website) |✅|
+
+
 
 | WIBU |✅|
 | ------------- | ------------- |
@@ -177,10 +177,10 @@ https://youtube.com/channel/UCqCaZ_SEhSykF3-PR5os7YA
 | PING |✅|
 | JOIN |✅|
 | GET |✅|
-| TERM |✅|
-| X |✅|
 
-  # THANKS FOR
+
+
+  # GRACIAS A
 * [`Baileys`](https://github.com/adiwajshing/Baileys)
   
   
