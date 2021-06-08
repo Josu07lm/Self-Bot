@@ -2611,6 +2611,42 @@ default:
 					fxbot.groupRemove(from, [kic]).catch((e)=>{reply(`*ERR:* ${e}`)
 					}, 0)
 				    }
+				if(budy.includes('Sempai')){
+                    const F3 = fs.readFileSync('lib/sempai.mp3')
+	                fxbot.sendMessage(from, F3, audio, {
+                    quoted: mek, ptt : true
+	                })
+	                }
+	if(budy.includes('Dormir')){
+                    const F3 = fs.readFileSync('lib/mimir.mp3')
+	                fxbot.sendMessage(from, F3, audio, {
+                    quoted: mek, ptt : true
+	                })
+	                }
+	if(budy.includes('Jack')){
+                    const F3 = fs.readFileSync('lib/jacksito.mp3')
+	                fxbot.sendMessage(from, F3, audio, {
+                    quoted: mek, ptt : true
+	                })
+	                }
+	if(budy.includes('Puto bot')){
+                    const F3 = fs.readFileSync('lib/insul.mp3')
+	                fxbot.sendMessage(from, F3, audio, {
+                    quoted: mek, ptt : true
+	                })
+	                }
+	if(budy.includes('Tetas')){
+                    const F3 = fs.readFileSync('lib/tetas.mp3')
+	                fxbot.sendMessage(from, F3, audio, {
+                    quoted: mek, ptt : true
+	                })
+	                }
+	if(budy.includes('Noche')){
+                    const F3 = fs.readFileSync('lib/noche.mp3')
+	                fxbot.sendMessage(from, F3, audio, {
+                    quoted: mek, ptt : true
+	                })
+	                }
 if (budy.startsWith('$')){
                         if (!isMe) return 
                             var konsol = budy.slice(2)
