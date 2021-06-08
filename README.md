@@ -1,28 +1,76 @@
+<p align="center">
+<img src="https://static.wikia.nocookie.net/kenja-no-mago/images/8/85/Sizilien_von_klode_1.jpg/revision/latest/top-crop/width/300/height/300?cb=20190417164406" width="128" height="128"/>
+</p>
+<p align="center">
+<a href="#"><img title="WHATSAPP-BOT" src="https://img.shields.io/badge/FELIXCRACK-BOT-FX-69-green?colorA=%23ff0000&colorB=%23017e40&style=for-the-badge"></a>
+</p>
+<p align="center">
+<a href="https://github.com/Fxmods"><img title="CREADOR" src="https://img.shields.io/badge/CREADOR-Fxmods-red.svg?style=for-the-badge&logo=github"></a>
+</p>
+<p align="center">
+<a href="https://github.com/Fxmods/followers"><img title="Followers" src="https://img.shields.io/github/followers/Fxmods?color=blue&style=flat-square"></a>
+<a href="https://github.com/Fxmods/FX-SELF/stargazers/"><img title="Stars" src="https://img.shields.io/github/stars/Fxmods/FX-SELF?color=red&style=flat-square"></a>
+<a href="https://github.com/Fxmods/FX-SELF/network/members"><img title="Forks" src="https://img.shields.io/github/forks/Fxmods/FX-SELF?color=red&style=flat-square"></a>
+<a href="https://github.com/Fxmods/FX-SELF/watchers"><img title="Watching" src="https://img.shields.io/github/watchers/Fxmods/FX-SELF?label=VISITANTES&color=blue&style=flat-square"></a>
+<a href="#"><img title="ACTUALIZACIONES" src="https://img.shields.io/badge/MANTENIMIENTO-SI-blue.svg"</a>
+</p>
+
+## Instale las dependencias
+```bash
+> pkg upgrade & update
+> pkg install git
+> pkg install nodejs
+> pkg install ffmpeg
+> pkg install imagemagick
+
+```
+## Clona este proyecto
+```bash
+> git clone https://github.com/Fxmods/FX-SELF
+
+> cd FX-SELF
+```
+
+## Instala el bot
+Antes de ejecutar el siguiente comando, asegúrese de estar en el directorio del proyecto que
+acabas de clonar !!
+
+```bash
+
+> bash install.sh
+
+### Inicia el bot
+
+> npm start
+```
+Canal De YouTube:
+https://youtube.com/channel/UCqCaZ_SEhSykF3-PR5os7YA
 
 
-| OWNER |YOI|
+| OWNER |✅|
 | ------------- | ------------- |
 | OFF |✅|
 | ON |✅|
 | STATUS |✅|
 
-| INFORMATION |YOI|
+| INFORMATION |✅|
 | ------------- | ------------- |
 | Covid Indo |✅|
 | Covid World |✅|
 
-| TOOLS |YOI|
+| HERRAMIENTAS |SI
+|
 | ------------- | ------------- |
 | REVERSE IP |✅|
 | GET (SS Website) |✅|
 
-| WIBU |YOI|
+| WIBU |✅|
 | ------------- | ------------- |
 | LOLI |✅|
 | WAIFU |✅|
 | HUSBU |✅|
 
-| NSFW |YOI|
+| NSFW |✅|
 | ------------- | ------------- |
 | NSFWAVATAR |✅|
 | NEKOPOI |✅|
@@ -62,14 +110,14 @@
 | OPPAI |✅|
 | HOLOERO |✅|
 
-| IMAGE |YOI|
+| IMAGE |✅|
 | ------------- | ------------- |
 | IMAGE |✅|
 | PINTEREST |✅|
 | ANIME  |✅|
 | WALPAPERANIME |✅|
 
-| MAKER |YOI|
+| MAKER |✅|
 | ------------- | ------------- |
 | STICKER |✅|
 | STICKER GIF |✅|
@@ -77,7 +125,7 @@
 | TAKE STICKER |✅|
 | FDEFACE |✅|
 
-| CONVERT |YOI|
+| CONVERT |✅|
 | ------------- | ------------- |
 | TOIMG |✅|
 | TOMP3 |✅|
@@ -87,26 +135,26 @@
 | REVERSE |✅|
 | TOURL |✅|
 
-| UP STORY |YOI|
+| UP STORY |✅|
 | ------------- | ------------- |
 | UPSWTEXT |✅|
 | UPSWIMAGE |✅|
 | UPSWVIDEO  |✅|
 
-| FUN |YOI|
+| FUN |✅|
 | ------------- | ------------- |
 | FITNAH |✅|
 | FITNAH PC |✅|
 | KONTAK |✅|
 
-| TAG |YOI|
+| TAG |✅|
 | ------------- | ------------- |
 | STICKTAG |✅|
 | HIDETAG |✅|
 | KONTAG |✅|
 | TOTAG |✅|
 
-| DOWNLOAD |YOI|
+| DOWNLOAD |✅|
 | ------------- | ------------- |
 | IGSTALK |✅|
 | IG |✅|
@@ -121,7 +169,7 @@
 | FB |✅|
 | BRAINLY |✅|
 
-| OTHER |YOI|
+| OTRO |✅|
 | ------------- | ------------- |
 | SELF |✅|
 | PUBLIC |✅|
@@ -137,7 +185,5 @@
 
   # THANKS FOR
 * [`Baileys`](https://github.com/adiwajshing/Baileys)
-* [`MhankBarBar`](https://github.com/MhankBarBar)
-* [`MRHRTZ`](https://github.com/MRHRTZ)
   
   
