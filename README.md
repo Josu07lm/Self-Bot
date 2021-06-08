@@ -58,9 +58,6 @@ https://youtube.com/channel/UCqCaZ_SEhSykF3-PR5os7YA
 | Covid Indo |✅|
 | Covid World |✅|
 
-| HERRAMIENTAS |SI
-|
-| ------------- | ------------- |
 | REVERSE IP |✅|
 | GET (SS Website) |✅|
 
